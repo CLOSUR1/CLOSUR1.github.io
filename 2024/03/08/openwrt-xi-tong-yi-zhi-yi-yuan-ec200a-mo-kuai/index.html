@@ -453,7 +453,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-03-08
+                    2024-06-11
                 </div>
                 
 
@@ -559,7 +559,7 @@ subversion libz-dev libc-dev rsync which<span aria-hidden="true" class="line-num
 <li>Run <code>make</code> to build your firmware. This will download all sources, build the cross-compile toolchain and then cross-compile the GNU/Linux kernel &amp; all chosen applications for your target system.</li>
 </ol>
 <p>准备好各种编译工具，运行1.和2.后make menuconfig进行编译前设置，选择对应板子的芯片类型和板子类型，如图为MT7981和MediaTek mt7981-spim-nand-rfb。</p>
-<p><img src="/OpenWRT%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E7%A7%BB%E8%BF%9CEC200A%E6%A8%A1%E5%9D%97%208d36014f611d48ffa4dc264f255a65c8/Untitled.png" alt="Untitled"></p>
+<p><img src="/.com//Untitled.png" alt="Untitled"></p>
 <p>保存后退出，在源码目录运行<code>make V=99</code>进行编译，V=99是输出打印，方便查看编译过程错误的原因（如有），第一次make成功后后续的编译可以根据电脑的cpu核心数加<code>-j12</code>，12是电脑cpu的核心数量，越大越快，不建议完全等于cpu核心数量。<br>第一次make完后源码目录会出现build_dir目录，其中会包含编译工具链我们需要替换的文件，可以用<code>find build_dir/ -name option.c</code>找到，我的是：build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7981/linux-5.4.238/drivers/usb/serial/option.c</p>
 <h2 id="简单：替换驱动文件法"><a href="#简单：替换驱动文件法" class="headerlink" title="简单：替换驱动文件法"></a><strong>简单：替换驱动文件法</strong></h2><p>在Quectel_Linux_USB_Serial_Option_Driver_20230524.tgz中找到与自己系统内核版本最近的文件夹，我的系统内核是5.4.238，最接近的是5.4.41的这个。</p>
 <p>进入文件夹最里层drivers/usb/serial/，会看到有四个文件：option.c、qcserial.c、usb_wwan.c、usb-wwan.h</p>
@@ -600,7 +600,7 @@ subversion libz-dev libc-dev rsync which<span aria-hidden="true" class="line-num
 <p>根据手册Quectel_UMTS_LTE_5G_Linux_USB_Driver用户指导V1.0.pdf，还需要:</p>
 <ol>
 <li><p>添加USB零包机制</p>
-<p> <img src="/OpenWRT%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E7%A7%BB%E8%BF%9CEC200A%E6%A8%A1%E5%9D%97%208d36014f611d48ffa4dc264f255a65c8/Untitled%201.png" alt="Untitled"></p>
+<p> <img src="/.com//Untitled%201.png" alt="Untitled"></p>
  <pre class="line-numbers language-c" data-language="c"><code class="language-c">#if 1 //Added by Quectel for zero packet
 if (dir == USB_DIR_OUT) {
 struct usb_device_descriptor *desc = &amp;serial-&gt;dev-&gt;descriptor;
@@ -610,13 +610,13 @@ urb-&gt;transfer_flags |= URB_ZERO_PACKET;
 #endif<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>添加复位恢复机制</p>
-<p> <img src="/OpenWRT%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E7%A7%BB%E8%BF%9CEC200A%E6%A8%A1%E5%9D%97%208d36014f611d48ffa4dc264f255a65c8/Untitled%202.png" alt="Untitled"></p>
+<p> <img src="/.com//Untitled%202.png" alt="Untitled"></p>
  <pre class="line-numbers language-c" data-language="c"><code class="language-c">#if 1 //Added by Quectel
 .reset_resume = usb_wwan_resume,
 #endif<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>使用ECM or RANDIS</p>
-<p> <img src="/OpenWRT%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E7%A7%BB%E8%BF%9CEC200A%E6%A8%A1%E5%9D%97%208d36014f611d48ffa4dc264f255a65c8/Untitled%203.png" alt="Untitled"></p>
+<p> <img src="/.com//Untitled%203.png" alt="Untitled"></p>
 </li>
 </ol>
 <p>但是对于我使用的linux内核版本，在Quectel_Linux_USB_Serial_Option_Driver_20230524.tgz的文件中移远已经进行添加修改，所以我们只需要全部替换build_dir/——-/drivers/usb/serial中对应的文件即可。</p>
@@ -933,9 +933,45 @@ Base system ---&gt;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2024/03/08/dang/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="荡">
+                        
+                        <span class="card-title">荡</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            荡荡上帝，下民之辟。疾威上帝，其命多辟。天生烝民，其命匪谌。靡不有初，鲜克有终。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-08
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Ask loong
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
                 <a href="/2024/03/08/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/">
@@ -966,43 +1002,6 @@ Base system ---&gt;
                     </div>
                 </div>
 
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2024/03/08/dang/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="荡">
-                        
-                        <span class="card-title">荡</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            荡荡上帝，下民之辟。疾威上帝，其命多辟。天生烝民，其命匪谌。靡不有初，鲜克有终。
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-08
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            Ask loong
-                            
-                        </span>
-                    </div>
-                </div>
                 
             </div>
         </div>
