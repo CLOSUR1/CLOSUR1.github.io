@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="OpenWRT系统移植移远EC200A模块, C、C++、Linux">
+    <meta name="keywords" content="C、C++、Linux">
     <meta name="description" content="日常随笔分享">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>OpenWRT系统移植移远EC200A模块 | CLOSUR1&#39;s Blog</title>
+    <title>CLOSUR1&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">OpenWRT系统移植移远EC200A模块</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -460,14 +460,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.2k
+                    3.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    11 分
                 </div>
                 
 
@@ -496,214 +496,104 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="OpenWRT系统移植移远EC200A模块"><a href="#OpenWRT系统移植移远EC200A模块" class="headerlink" title="OpenWRT系统移植移远EC200A模块"></a>OpenWRT系统移植移远EC200A模块</h1><h1 id="OpenWRT系统移植移远EC200A模块-1"><a href="#OpenWRT系统移植移远EC200A模块-1" class="headerlink" title="OpenWRT系统移植移远EC200A模块"></a><strong>OpenWRT系统移植移远EC200A模块</strong></h1><h2 id="网卡的驱动方式"><a href="#网卡的驱动方式" class="headerlink" title="网卡的驱动方式"></a><strong>网卡的驱动方式</strong></h2><p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qlexcel/article/details/117150901">拨号PPP NDIS RNDIS CDC ECM NCM QMI_WWAN GOBINET RMNET MBIM概念介绍</a><br>1、其实总结起来，我觉得就两种，一种是PPP类，一种是NDIS族类。NDIS族类的方式是标准化加高效化，对上，尽量标准化为网络设备；对下，则尽可能适应物理通道，高效利用。<br>2、RMNET拨号、QMI拨号、NDIS拨号都是NDIS拨号，叫法不同而已。<br>3、USB网卡拨号分为RMNET/QMI/NDIS、ECM、MBIM、RNDIS四种类型。<br>5、速度、对比、选用<br>  PPP使用复杂，对CPU负载大，网速上不去，不推荐使用。<br>  NDIS拨号支持QMAP功能，可以实现IP聚合和IP复用功能。支持IP聚合就可以一次URB传输多个IP包，减少CPU负载率。支持IP复用，可以实现多网卡的功能。因此推荐使用（尤其是高通模组）。<br>  ECM不支持IP聚合和复用功能，决定了不适用于高速场景。<br>  RNDIS协议上是支持IP聚合的，但是Linux自带驱动没有使用，所以也不适用于高速场景。<br>  MBIM默认就支持IP聚合，也支持IP复用。推荐使用。</p>
-<p>EC200A 支持的网卡驱动： <strong>PPP</strong>、 <strong>ECM</strong>、<strong>RNDIS</strong><br>EC20 支持：<strong>PPP</strong>、<strong>QMI</strong>、 <strong>GobiNet</strong></p>
-<h2 id="用到的文件："><a href="#用到的文件：" class="headerlink" title="用到的文件："></a><strong>用到的文件：</strong></h2><ol>
-<li>Quectel_Linux_USB_Serial_Option_Driver_20230524.tgz</li>
-<li>KBA_EC200&amp;UC200_Linux&amp;Android_USB_driver_移植说明.pdf</li>
-<li>Quectel_UMTS_LTE_5G_Linux_USB_Driver用户指导V1.0.pdf</li>
-</ol>
-<h2 id="确定linux版本和模组pid、vid"><a href="#确定linux版本和模组pid、vid" class="headerlink" title="确定linux版本和模组pid、vid"></a><strong>确定linux版本和模组pid、vid</strong></h2><p>确定系统的linux内核版本，可用以下命令查看确定，如下可确定linux内核版本为5.4.238</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@OpenWrt:/# dmesg | head
-[ &nbsp; &nbsp;0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd034]
-[ &nbsp; &nbsp;0.000000] Linux version 5.4.238 (chenlishe@datalink-System-Product-Name) (gcc version 8.4.0 (OpenWrt GCC 8.4.0 r16856-dcaa45c67d)) #0 SMP Thu Jul 6 07:27:51 2023
-[ &nbsp; &nbsp;0.000000] Machine model: MediaTek MT7981 RFB
-[ &nbsp; &nbsp;0.000000] earlycon: uart8250 at MMIO32 0x0000000011002000 (options '')
-[ &nbsp; &nbsp;0.000000] printk: bootconsole [uart8250] enabled
-[ &nbsp; &nbsp;0.000000] On node 0 totalpages: 64592
-[ &nbsp; &nbsp;0.000000] &nbsp; DMA32 zone: 1024 pages used for memmap
-[ &nbsp; &nbsp;0.000000] &nbsp; DMA32 zone: 0 pages reserved
-[ &nbsp; &nbsp;0.000000] &nbsp; DMA32 zone: 64592 pages, LIFO batch:15
-[ &nbsp; &nbsp;0.000000] psci: probing for conduit method from DT.
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h1 id="深入浅出Wi-Fi7技术储备"><a href="#深入浅出Wi-Fi7技术储备" class="headerlink" title="深入浅出Wi-Fi7技术储备"></a>深入浅出Wi-Fi7技术储备</h1><h1 id="Wi-Fi7新特性"><a href="#Wi-Fi7新特性" class="headerlink" title="Wi-Fi7新特性"></a>Wi-Fi7新特性</h1><h2 id="MLO链路聚合技术"><a href="#MLO链路聚合技术" class="headerlink" title="MLO链路聚合技术"></a>MLO<strong>链路聚合技术</strong></h2><h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><p>MLD（即支持MLO的设备）PHY：</p>
+<p>在MLD以前的IC虽然支持多个频段的连接，但是每一次只能够选择一个频段进行连接。所以对于一个终端而言，一次只能够和AP建立单独一个Wi-Fi连接，这个连接要不是在2.4GHz上某个信道，要不是在5GHz上的某个信道。而AP可以多个频段同时工作，但是其实现方法是通过多IC的方式处理的，也就是不同频段使用不同的IC进行隔离，从而能够允许多频段的并行工作。之所以一块IC只能够提供一个频段的连接，很大程度上与IC内部只提供单个基带的设置有关。</p>
 
-<p>EC200A series (RTOS): VID: 0x02c7c  PID: 0x6005</p>
-<p>openwrt版本可以通过以下命令：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@OpenWrt:/# cat /etc/openwrt_release
-DISTRIB_ID='OpenWrt'
-DISTRIB_RELEASE='21.02-SNAPSHOT'
-DISTRIB_REVISION='r16856-dcaa45c67d'
-DISTRIB_TARGET='mediatek/mt7981'
-DISTRIB_ARCH='aarch64_cortex-a53'
-DISTRIB_DESCRIPTION='OpenWrt 21.02-SNAPSHOT r16856-dcaa45c67d'
-DISTRIB_TAINTS='no-all'
-root@OpenWrt:/# cat /etc/os-release
-NAME="OpenWrt"
-VERSION="21.02-SNAPSHOT"
-ID="openwrt"
-ID_LIKE="lede openwrt"
-PRETTY_NAME="OpenWrt 21.02-SNAPSHOT"
-VERSION_ID="21.02-snapshot"
-HOME_URL="https://openwrt.org/"
-BUG_URL="https://bugs.openwrt.org/"
-SUPPORT_URL="https://forum.openwrt.org/"
-BUILD_ID="r16856-dcaa45c67d"
-OPENWRT_BOARD="mediatek/mt7981"
-OPENWRT_ARCH="aarch64_cortex-a53"
-OPENWRT_TAINTS="no-all"
-OPENWRT_DEVICE_MANUFACTURER="OpenWrt"
-OPENWRT_DEVICE_MANUFACTURER_URL="https://openwrt.org/"
-OPENWRT_DEVICE_PRODUCT="Generic"
-OPENWRT_DEVICE_REVISION="v0"
-OPENWRT_RELEASE="OpenWrt 21.02-SNAPSHOT r16856-dcaa45c67d"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="编译openwrt"><a href="#编译openwrt" class="headerlink" title="编译openwrt"></a><strong>编译openwrt</strong></h2><p>一般openwrt系统的源码目录下都有README，根据README来进行编译即可，例如：</p>
-<h3 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a><strong>Requirements</strong></h3><p>You need the following tools to compile OpenWrt, the package names vary between distributions. A complete list with distribution specific packages is found in the <a target="_blank" rel="noopener" href="https://openwrt.org/docs/guide-developer/build-system/install-buildsystem">Build System Setup</a> documentation.</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">gcc binutils bzip2 flex python3 perl make find grep diff unzip gawk getopt
-subversion libz-dev libc-dev rsync which<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h3 id="Quickstart"><a href="#Quickstart" class="headerlink" title="Quickstart"></a><strong>Quickstart</strong></h3><ol>
-<li>Run <code>./scripts/feeds update -a</code> to obtain all the latest package definitions defined in feeds.conf / feeds.conf.default</li>
-<li>Run <code>./scripts/feeds install -a</code> to install symlinks for all obtained packages into package/feeds/</li>
-<li>Run <code>make menuconfig</code> to select your preferred configuration for the toolchain, target system &amp; firmware packages.</li>
-<li>Run <code>make</code> to build your firmware. This will download all sources, build the cross-compile toolchain and then cross-compile the GNU/Linux kernel &amp; all chosen applications for your target system.</li>
-</ol>
-<p>准备好各种编译工具，运行1.和2.后make menuconfig进行编译前设置，选择对应板子的芯片类型和板子类型，如图为MT7981和MediaTek mt7981-spim-nand-rfb。</p>
-<img src="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/Untitled.png" class="" title="make menuconfig">
-
-<p>保存后退出，在源码目录运行<code>make V=99</code>进行编译，V=99是输出打印，方便查看编译过程错误的原因（如有），第一次make成功后后续的编译可以根据电脑的cpu核心数加<code>-j12</code>，12是电脑cpu的核心数量，越大越快，不建议完全等于cpu核心数量。<br>第一次make完后源码目录会出现build_dir目录，其中会包含编译工具链我们需要替换的文件，可以用<code>find build_dir/ -name option.c</code>找到，我的是：build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7981/linux-5.4.238/drivers/usb/serial/option.c</p>
-<h2 id="简单：替换驱动文件法"><a href="#简单：替换驱动文件法" class="headerlink" title="简单：替换驱动文件法"></a><strong>简单：替换驱动文件法</strong></h2><p>在Quectel_Linux_USB_Serial_Option_Driver_20230524.tgz中找到与自己系统内核版本最近的文件夹，我的系统内核是5.4.238，最接近的是5.4.41的这个。</p>
-<p>进入文件夹最里层drivers/usb/serial/，会看到有四个文件：option.c、qcserial.c、usb_wwan.c、usb-wwan.h</p>
-<p>打开option.c，添加EC200A的pid和vid，如果是其他模组可以看是否已经包含有。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">static const struct usb_device_id option_ids[] = {
-#if 1 //Added by Quectel
-    { USB_DEVICE(0x05C6, 0x9090) }, /* Quectel UC15 */
-    { USB_DEVICE(0x05C6, 0x9003) }, /* Quectel UC20 */
-    { USB_DEVICE(0x05C6, 0x9215) }, /* Quectel EC20(MDM9215) */
-    { USB_DEVICE(0x2C7C, 0x0125) }, /* Quectel EC20(MDM9x07)/EC25/EG25 */
-    { USB_DEVICE(0x2C7C, 0x0121) }, /* Quectel EC21 */
-    { USB_DEVICE(0x2C7C, 0x0191) }, /* Quectel EG91 */
-    { USB_DEVICE(0x2C7C, 0x0195) }, /* Quectel EG95 */
-    { USB_DEVICE(0x2C7C, 0x0306) }, /* Quectel EG06/EP06/EM06 */
-    { USB_DEVICE(0x2C7C, 0x030B) }, /* Quectel EG065K/EG060K */
-    { USB_DEVICE(0x2C7C, 0x0514) }, /* Quectel BL EG060K RNDIS Only */
-    { USB_DEVICE(0x2C7C, 0x0512) }, /* Quectel EG12/EP12/EM12/EG16/EG18 */
-    { USB_DEVICE(0x2C7C, 0x0296) }, /* Quectel BG96 */
-    { USB_DEVICE(0x2C7C, 0x0700) }, /* Quectel BG95/BG77/BG600L-M3/BC69 */
-    { USB_DEVICE(0x2C7C, 0x0435) }, /* Quectel AG35 */
-    { USB_DEVICE(0x2C7C, 0x0415) }, /* Quectel AG15 */
-    { USB_DEVICE(0x2C7C, 0x0452) }, /* Quectel AG520 */
-    { USB_DEVICE(0x2C7C, 0x0455) }, /* Quectel AG550 */
-    { USB_DEVICE(0x2C7C, 0x0620) }, /* Quectel EG20 */
-    { USB_DEVICE(0x2C7C, 0x0800) }, /* Quectel RG500/RM500/RG510/RM510 */
-    { USB_DEVICE(0x2C7C, 0x0801) }, /* Quectel RG520/RM520/SG520 */
-    { USB_DEVICE(0x2C7C, 0x6026) }, /* Quectel EC200 */
-    { USB_DEVICE(0x2C7C, 0x6120) }, /* Quectel UC200 */
-    { USB_DEVICE(0x2C7C, 0x6000) }, /* Quectel EC200/UC200 */
-    { USB_DEVICE(0x2C7C, 0x6005) }, /* Quectel EC200a */
-    { .match_flags = USB_DEVICE_ID_MATCH_VENDOR, .idVendor = 0x2C7C }, /* Match All Quectel Modules */
-#endif
-    { USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_COLT) },
-    { USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA) },
-    { USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA_LIGHT) },
-    { USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA_QUAD) },<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>根据手册Quectel_UMTS_LTE_5G_Linux_USB_Driver用户指导V1.0.pdf，还需要:</p>
-<ol>
-<li><p>添加USB零包机制</p>
-<img src="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/Untitled1.png" class="" title="添加USB零包机制">
-
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">#if 1 //Added by Quectel for zero packet
-if (dir == USB_DIR_OUT) {
-struct usb_device_descriptor *desc = &amp;serial-&gt;dev-&gt;descriptor;
-if (desc-&gt;idVendor == cpu_to_le16(0x2C7C))
-urb-&gt;transfer_flags |= URB_ZERO_PACKET;
-}
-#endif<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>粗略而言，我们可以理解图的上半部分是一个AP，这个AP包含一个IC，这个IC里面包含三个device，这里画三个主要是设想中分别对应2.4GHz，5GHz以及6GHz，也就是2.4+5+6的场景。该图的下半部分对应的是终端，该终端和AP一样，同样是一个IC，里面三个device。AP和终端间可以建立多个连接，按照图例上包含2个连接，即Link 1和Link 2。这里描述没有特别凸显一个IC内，而是仍然采用AP，STA这样的概念描述，是为了兼容协议当前框架的描述，换言之，最简单理解就是把原来两个独立的东西，塞到一个地方，然后讨论其协同工作的模式，但是其本身独立工作的机理并没有做改变，只是添加了新的协作功能而已。</p>
+<p>多链路设备的一个射频单元有至少两个以上的射频链路链接到空口，但对于逻辑链路控制（LLC）层仅只有一个MAC地址。相比于单链路设备，在射频链路上增加了冗余。设备根据使用场景与状态，进行不同链路的切换与协同，来保障数据能够更高效、更快速、低延迟地进行传输。</p>
+<p>MLO中还有一个一个概念就是Link的概念，代表实际的连接。注意：Link也有各自独立的mac地址。协议规定MLD的mac可以跟两个Link中的一个相同，也可以是另外不同的唯一地址。</p>
+<h3 id="MLO的细分模式"><a href="#MLO的细分模式" class="headerlink" title="MLO的细分模式"></a>MLO的细分模式</h3><ol>
+<li><p><strong>STR和NSTR模式</strong></p>
+<p> <strong>异步模式（STR模式）</strong></p>
+<p> Simultaneous Tx and Rx，同时的收发工作模式。是一种不同Link间允许同时工作，所产生全双工的工作机制。两个Link是完全独立工作的，两者互不干扰。所以在传输过程中，就有可能会出现，link 1发送，link 2接收这样的情况，所以称为STR模式。（注意：和以太网上的全双工不是一个概念）</p>
+ <img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled.png" class="" title="STR">
+<p> <strong>同步模式（NSTR模式）</strong></p>
+<p> non-STR：不支持在两个link上同时TX/RX，两个link要么同时发送要么同时接收，比如2G+5G/6G</p>
+ 
+<p> 2.4G + 5G干扰比较小，所以可以用STR 同时进行TX/RX没有问题。而5G + 5G/6G由于信道相邻，一个link的发射很容易功率泄露出去影响到另外一个link的接收。</p>
 </li>
-<li><p>添加复位恢复机制</p>
-<img src="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/Untitled2.png" class="" title="添加复位恢复机制">
-
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">#if 1 //Added by Quectel
-.reset_resume = usb_wwan_resume,
-#endif<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<li><p><strong>MLO MLMR和MLSR模式</strong></p>
+<p> 这两种模式主要是站在当前工作的Link数量的角度来定义的。</p>
+<p> 虽然MLO支持多个Link，但并不是时时刻刻都有多个link在工作。比如一开始连上的时候，默认是只有一个link在工作的，主要是为了省电，等到系统检测到流量开始多起来，才会使能另外一条link来获得更好的性能。实际使用过程中的各种场景较复杂，也有很多其他场景被迫只能使用一根（比如干扰，SAP/P2P共流）。</p>
+ 
+<p> MLMR: Multi Link Multi Radio: 两条link都在工作，在国内就类似是2.4G+5G</p>
+<p> MLSR: Multi Link Single Radio: 只有一条link在工作，只有2.4G或者只有5G，通过形如“qos null pm=1”告诉路由器这条link休眠了。</p>
 </li>
-<li><p>使用ECM or RANDIS</p>
-<img src="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/Untitled3.png" class="" title="使用ECM or RANDIS"></li>
 </ol>
-<p>但是对于我使用的linux内核版本，在Quectel_Linux_USB_Serial_Option_Driver_20230524.tgz的文件中移远已经进行添加修改，所以我们只需要全部替换build_dir/——-/drivers/usb/serial中对应的文件即可。</p>
-<p>修改完后需要对内核进行配置，在源码目录<code>make kernel_menuconfig</code>和<code>make menuconfig</code>，记得保存后再退出。</p>
-<pre class="line-numbers language-none"><code class="language-none">添加ECM与RNDIS驱动
-make kernel_menuconfig
-Device Drivers &nbsp;---&gt;
-    [*] USB support &nbsp;---&gt;
-        &lt;*&gt; &nbsp; Support for Host-side USB
-        &lt;*&gt; &nbsp; USB Serial Converter support &nbsp;---&gt;
-            &lt;*&gt; &nbsp; USB driver for GSM and CDMA modems
-    [*] Network device support &nbsp;---&gt;
-        USB Network Adapters &nbsp;---&gt;
-            &lt;*&gt; Multi-purpose USB Networking Framework
-                &lt;*&gt; &nbsp; CDC Ethernet support (smart devices such as cable modems)
-                &lt;*&gt; &nbsp; CDC NCM support
-                &lt;*&gt; &nbsp; Host for RNDIS and ActiveSync devices (EXPERIMENTAL)
+<h3 id="复制传输和联合传输"><a href="#复制传输和联合传输" class="headerlink" title="复制传输和联合传输"></a><strong>复制传输和联合传输</strong></h3><p>在多链路设备上进行数据传输的典型模式有复制传输和联合传输。复制传输，其中一个信道环境存在干扰时，接收端根据先到先得原则，可以有效地降低传输时延。联合传输，顾名思义就是将数据报文进行合理地拆分，同时在两个射频链路上进行数据传输，可以有效地提升传输效率。此外，多链路设备可以通过其中一个链路交换其它链路的工作状态和电源管理信息，使其仅在需要的时候进入工作状态，剩余时间休眠，更有效地节能。</p>
 
-添加 USB网络驱动
-make menuconfig
-Kernel modules &nbsp;---&gt;
- &nbsp;  USB Support &nbsp;---&gt;
- &nbsp; &nbsp; &nbsp; &nbsp;-*- kmod-usb-core
- &nbsp; &nbsp; &nbsp; &nbsp;-*- kmod-usb-net
- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-*- &nbsp; kmod-usb-net-cdc-ether
- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; &nbsp; kmod-usb-net-rndis
- &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; kmod-usb-ohci
- &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; kmod-usb-serial
- &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; kmod-usb-serial-option
- &nbsp; &nbsp; &nbsp; &nbsp; -*- kmod-usb-serial-wwan
- &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; kmod-usb-uhci
- &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; kmod-usb2
 
-PPP拨号相关( 如果不使用PPP可以减少这块的编译安装)
-Network &nbsp;---&gt;
- &nbsp; &nbsp;-*- chat
- &nbsp;  &lt;*&gt; ppp
- &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; ppp-mod-pppoa
- &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; ppp-mod-pppoe
- &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; ppp-mod-pppol2tp
- &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; ppp-mod-pptp
- &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; ppp-mod-radius
- &nbsp;  &lt;*&gt; ppp-multilink
- &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; pppdump
- &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; pppstats
- &nbsp;  &lt;*&gt; ser2net
-
-添加网络工具
-Utilities &nbsp;---&gt;
- &nbsp;  &lt;*&gt; usb-modeswitch
-
-添加命令工具
-Base system ---&gt;
- &nbsp;  &lt;*&gt; busybox (编译后出现 回车键进入)
- &nbsp; &nbsp; &nbsp;  Miscellaneous Utilities ---&gt; [*] microcom
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>随后进行编译make V=99 -j12</p>
-<p>成功后在源码目录的/bin/targets/mediatek/mt7981/下有生成的固件，烧录型如：openwrt-mediatek-mt7981-mt7981-spim-nand-rfb-squashfs-sysupgrade.bin的文件即可</p>
-<p>烧录后USB接入板子，ls /dev/ttyUSB*查看是否有3个ttyUSB，如果有即网卡USB驱动移植成功</p>
-<p>利用echo或者microcom发送AT指令：</p>
-<ol>
-<li>ATI</li>
-<li>AT+CMEE=2</li>
-<li>AT+CPIN?</li>
-<li>AT+QCCID</li>
-<li>AT+QCFG=”usbnet”,1</li>
-<li>AT+QNETDEVCTL=3,1</li>
-</ol>
-<p>AT开启自动拨号上网，<code>vi  /etc/config/network</code>配置网络上网：</p>
-<pre class="line-numbers language-none"><code class="language-none">config interface 'wwan1'
-    option ifname 'usb0'
-    option proto 'dhcp'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>使用ifconfig查看网卡是否生成wwan1，ping baidu.com看是否上网。</p>
-<h2 id="技巧：打补丁法"><a href="#技巧：打补丁法" class="headerlink" title="技巧：打补丁法"></a><strong>技巧：打补丁法</strong></h2><p>由于build_dir 在make clean 后就会清空修改后文件，可以通过patch方式来实现编译自动生成代码，</p>
-<p>吧/drivers/usb/serial目录下option.c qcserial.c usb_wwan.c usb-wwan.h 拷贝到桌面(<strong>如果修改这部分代码，需要还原一下文件，最好方式make clean 然后再make V=s -j12</strong>)，找到移远的linux的USB驱动相近内部版本，通过命令生成patch ( diff -Nur file.old file.new &gt; xxx.patch)<br><code>diff -Nur xx/ v4.14.111/drivers/usb/serial/ &gt; ./ec200a.patch</code></p>
-<p>生成完之后不能直接用，</p>
+<blockquote>
+<p>对于上述提到的MLO细分模式和传输模式，对于我们目前来讲更多是黑盒状态，我们并不能知道实际上使用的是哪种模式，协议和底层配置已经实现了，实际使用上应该根据环境是自动切换。</p>
+</blockquote>
+<h3 id="MLO与传统双WIFI技术的对比"><a href="#MLO与传统双WIFI技术的对比" class="headerlink" title="MLO与传统双WIFI技术的对比"></a><strong>MLO与传统双WIFI技术的对比</strong></h3><p>MLO确实很像双Wi-Fi加速，都是连两个Wi-Fi热点，都能实现加速特点。但WiFi 7的MLO跟这个其实不是一回事。现有的双WiFi加速实现的原理是双网卡（wlan0/wlan1），连两个WiFi会有两个IP地址，上层再把数据在TCP层次聚合在一起。而WiFi 7的MLO多链接操作，在逻辑上仍然是单网卡(wlan0)，两个通路的数据在MAC层就聚合了，对上层来说，完全感知不到连了两个Wi-Fi热点。</p>
+<p><strong>双Wi-Fi加速：</strong></p>
 <ul>
-<li>所有diff -Nur 的行全部删除</li>
-<li>将所有的xx 替换 a/drivers/usb/serial</li>
-<li>将所有的v4.14.111/drivers/usb/serial 替换 b/drivers/usb/serial</li>
+<li>双网卡双wlan节点双IP地址；</li>
+<li>需要TCP层次的客制化修改以分配和聚合不同网卡的TCP连接；</li>
+<li>可以支持任意2.4G+5G的热点混搭；</li>
+<li>只对使用多TCP connections的app有好处；</li>
+<li>需要主动去连接两个Wi-Fi热点。</li>
 </ul>
-<p>重命名（0999-add-mt7981-ec200a-drivers.patch）将生成的文件拷贝到<code>target/linux/ramips/patches-5.4/</code>，<code>make clean</code> 后才会在下一次的 <code>make V=99 -j12</code> 打入补丁。</p>
-<p>编译好后可以在<code>build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7981/linux-5.4.238/drivers/usb/serial/option.c</code>查看是否打人补丁，是否有EC200A的pid、vid，是否有移远USB网卡需要添加的部分等等。</p>
+
+
+<p><strong>Wi-Fi 7 MLO：</strong></p>
+<ul>
+<li>无需TCP层次的修改，用户空间感知不到有任何变化；</li>
+<li>单网卡单wlan节点单IP地址；</li>
+<li>数据聚合发生在MAC层</li>
+<li>对上层app的TCP connections没有任何要求；</li>
+<li>需要路由器也支持WiFi MLO才能支持多链路操作；</li>
+<li>只要主动连一个热点，另外一个自动连接。</li>
+</ul>
+
+
+<h2 id="MRU多资源单元技术"><a href="#MRU多资源单元技术" class="headerlink" title="MRU多资源单元技术"></a>MRU多资源单元技术</h2><p>Wi-Fi6引入了OFDMA（正交频分多址，最广应用在4G技术LTE上），提出了RU(Resource uint)的概念，定义了一共7种RU：26-tone RU、52-tone RU、106-tone RU、242-tone RU、484-tone RU、9966-tone RU和2X996-tone RU，但这些情况下，用户只能分配到固定的RU工作。</p>
+<p>一个20MHz的OFDMA信道包含了256个子载波（Subcarriers，或者称为Tones）组成。这些子载波组成了一些子信道，我们称一个子信道为一个资源单元（RU）。如上图所示，当20 MHz信道时被细分时，802.11ax终端可以使用4种不同大小的RU单元，分别包含26个子载波，52个子载波，106个子载波和242子载波，大约相当于2MHz，4MHz，8MHz和20MHz信道带宽的分别。 802.11ax的AP决定了在一个20MHz信道内可以使用多少个RU，以及RU形成的不同组合。</p>
+
+
+<p>简答来讲就是：将信道分成若干正交子信道，将高速数据信号转换成并行的低速子数据流，调制到在每个子信道上进行传输。</p>
+
+
+<p>如上图所示，802.11ax AP首先向终端#1和终端#2发送下行数据，在第一时刻，20MHz的信道通过OFDMA技术被划分成了两个子信道。在OFDMA技术中，20MHz信道包含了256个子载波，终端#1和终端#2分别占据106个子载波，这些子载波互相没有交叠。在第二时刻，802.11ax AP向终端#3，终端#4，终端#5和终端#6发送下行信息。在此时，信道被划分成4个子信道，分别占据52个子载波。在第三时刻，802.11ax AP使用整个信道发送下行数据帧给终端#5，此时一共使用了242个数据子载波，其可以有效的利用整个20MHz的信道。在第四时刻，AP使用两个子信道，分别是106个子载波向终端#4和终端#6发送数据。在第五时刻，AP在此向单个终端（即终端#1）发送下行数据，其占据整个20MHz信道，包含242个数据子载波。在第六时刻，AP同时向终端#3，终端#4和终端#6发送下行数据。此时，信道被划分成3个不等大小的子信道，其中终端#3和终端#4分别占据52个子载波，终端#6占据106个子载波。</p>
+<p>Wi-Fi7中提出了MRU的概念，它允许讲多个RU分给单用户使用。例如，20M带宽，分配给两个用户，在Wi-Fi6时代，两个用户可以分别分配106，到了Wi-Fi7，可以分别分配106+26和106。</p>
+<p>对于前面提到的RU，随意组合会较大增加复杂度，因此协议对组合进行了限制，首先协议将RU分成了两类：</p>
+<ul>
+<li>小部RU：26、52、106-tone RU</li>
+<li>大部RU：242、484、996、2×996、 3×996-toneRU</li>
+</ul>
+<p>不同大类RU之间不能组合，具体组合规范不进行探讨。</p>
+
+
+<p>大部+小部这样去拼凑，理论上是有增益的，但实际上需要依赖：</p>
+<ul>
+<li>厂家对于MRU的构造算法；</li>
+<li>实际使用场景和环境对于sub carriers（tones）的分配的影响。</li>
+</ul>
+<blockquote>
+<p>私货：感觉Wi-Fi的协议还是比较理想化，像搭乐高积木一样，在相同应用OFDMA技术的LTE上，基站已经可以根据子载波灵活分配给最合适的用户终端了，不受子载波是否连续的限制，而且分配机制的主要准则是看信噪比进行分配，而非厂商定义。</p>
+</blockquote>
+<h3 id="对于多用户"><a href="#对于多用户" class="headerlink" title="对于多用户"></a>对于多用户</h3><p>配合OFDMA，可以降低延迟25%（源自MediaTek文档，对比11ax）。<br>例如，如果4个用户同时传输，传输数据比例为2:2:3:1，与WiFi5和WiFi6 AP相比，实现了最短端到端延迟，延迟分别降低了33%和25%，如图所示</p>
+
+
+<h3 id="对于单用户"><a href="#对于单用户" class="headerlink" title="对于单用户"></a>对于单用户</h3><p>单个用户要结合前导码打孔技术技术来一起看，才能体现出Wi-Fi7的优势，具体如下</p>
+<h2 id="Preamble-Puncture-前导码打孔技术"><a href="#Preamble-Puncture-前导码打孔技术" class="headerlink" title="Preamble Puncture 前导码打孔技术"></a>Preamble Puncture 前导码打孔技术</h2><p> Wi-Fi6其实就已经有了preamble puncture了，本质上是频谱打孔。但是技术有一个要求，就是给两个或者以上节点配合工作。比如一段频谱，中间被占一小段，那么就可以调度两个资源单元（RU），左右隔开来，给分配给两个用户使用。</p>
+
+
+<p><strong>为什么给选两个或者以上用户？</strong></p>
+<p>这就是Wi-Fi6的要求，一个用户只能选一个RU。但是一个紧接着问题是，如果只有一个用户，或者此时虽然多个用户，但是只有一个用户有数据要传输。那么之前的频谱打孔就失效了。因此，反思问题主要是一个用户只能选一个RU，那么改成MRU就可以了。排除协议细节，仅从思路上我们可以这样理解。</p>
+
+
+<p>带来好处最直接的就是用户带宽的设置和使用，默认设置最大即可，中间靠协议和实现，底层做自适应的调节。能给单个用户在信道受干扰的条件下分配到更大的带宽资源，也就是提升了抗干扰能力了。</p>
+<h2 id="参考文件"><a href="#参考文件" class="headerlink" title="参考文件"></a>参考文件</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.intel.com/content/dam/www/public/us/en/documents/pdf/wi-fi-7-and-beyond.pdf">https://www.intel.com/content/dam/www/public/us/en/documents/pdf/wi-fi-7-and-beyond.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.qualcomm.com/news/onq/2022/02/pushing-limits-wi-fi-performance-wi-fi-7">https://www.qualcomm.com/news/onq/2022/02/pushing-limits-wi-fi-performance-wi-fi-7</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ohexy5VE170">https://www.youtube.com/watch?v=ohexy5VE170</a></li>
+<li><a target="_blank" rel="noopener" href="https://d86o2zu8ugzlg.cloudfront.net/mediatek-craft/documents/Wi-Fi-7-MLO-White-Paper-WF7MLOWP0622.pdf">https://d86o2zu8ugzlg.cloudfront.net/mediatek-craft/documents/Wi-Fi-7-MLO-White-Paper-WF7MLOWP0622.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://mediatek-marketing.files.svdcdn.com/production/documents/Wi-Fi-7-MLO-White-Paper-WF7MLOWP0622.pdf?dm=1684470687">https://mediatek-marketing.files.svdcdn.com/production/documents/Wi-Fi-7-MLO-White-Paper-WF7MLOWP0622.pdf?dm=1684470687</a></li>
+<li><a target="_blank" rel="noopener" href="https://mediatek-marketing.files.svdcdn.com/production/documents/Key-Advantages-of-Wi-Fi-7_MediaTek-White-Paper-WF70222.pdf?dm=1684470666">https://mediatek-marketing.files.svdcdn.com/production/documents/Key-Advantages-of-Wi-Fi-7_MediaTek-White-Paper-WF70222.pdf?dm=1684470666</a></li>
+</ol>
 
                 
             </div>
@@ -730,7 +620,7 @@ Base system ---&gt;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/">http://example.com/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/</a>
+                    <a href="http://example.com/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/">http://example.com/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -935,10 +825,9 @@ Base system ---&gt;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <a href="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/">
                     <div class="card-image">
@@ -956,9 +845,9 @@ Base system ---&gt;
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-11
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-06-11
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -967,7 +856,6 @@ Base system ---&gt;
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -978,24 +866,24 @@ Base system ---&gt;
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/">
+                <a href="/2024/03/08/dang/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="荡">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">荡</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            荡荡上帝，下民之辟。疾威上帝，其命多辟。天生烝民，其命匪谌。靡不有初，鲜克有终。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-08
                             </span>
                         <span class="publish-author">
                             
