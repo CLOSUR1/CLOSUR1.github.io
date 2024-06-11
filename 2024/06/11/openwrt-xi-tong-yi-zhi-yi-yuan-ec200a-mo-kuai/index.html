@@ -559,7 +559,7 @@ subversion libz-dev libc-dev rsync which<span aria-hidden="true" class="line-num
 <li>Run <code>make</code> to build your firmware. This will download all sources, build the cross-compile toolchain and then cross-compile the GNU/Linux kernel &amp; all chosen applications for your target system.</li>
 </ol>
 <p>准备好各种编译工具，运行1.和2.后make menuconfig进行编译前设置，选择对应板子的芯片类型和板子类型，如图为MT7981和MediaTek mt7981-spim-nand-rfb。</p>
-<p><img src="/.com//06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/Untitled.png" alt="Untitled"></p>
+<p><img src="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/Untitled.png" alt="Untitled"></p>
 <p>保存后退出，在源码目录运行<code>make V=99</code>进行编译，V=99是输出打印，方便查看编译过程错误的原因（如有），第一次make成功后后续的编译可以根据电脑的cpu核心数加<code>-j12</code>，12是电脑cpu的核心数量，越大越快，不建议完全等于cpu核心数量。<br>第一次make完后源码目录会出现build_dir目录，其中会包含编译工具链我们需要替换的文件，可以用<code>find build_dir/ -name option.c</code>找到，我的是：build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7981/linux-5.4.238/drivers/usb/serial/option.c</p>
 <h2 id="简单：替换驱动文件法"><a href="#简单：替换驱动文件法" class="headerlink" title="简单：替换驱动文件法"></a><strong>简单：替换驱动文件法</strong></h2><p>在Quectel_Linux_USB_Serial_Option_Driver_20230524.tgz中找到与自己系统内核版本最近的文件夹，我的系统内核是5.4.238，最接近的是5.4.41的这个。</p>
 <p>进入文件夹最里层drivers/usb/serial/，会看到有四个文件：option.c、qcserial.c、usb_wwan.c、usb-wwan.h</p>
