@@ -496,7 +496,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="OpenWRT系统移植移远EC200A模块"><a href="#OpenWRT系统移植移远EC200A模块" class="headerlink" title="OpenWRT系统移植移远EC200A模块"></a>OpenWRT系统移植移远EC200A模块</h1><h1 id="OpenWRT系统移植移远EC200A模块-1"><a href="#OpenWRT系统移植移远EC200A模块-1" class="headerlink" title="OpenWRT系统移植移远EC200A模块"></a><strong>OpenWRT系统移植移远EC200A模块</strong></h1><h2 id="网卡的驱动方式"><a href="#网卡的驱动方式" class="headerlink" title="网卡的驱动方式"></a><strong>网卡的驱动方式</strong></h2><p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qlexcel/article/details/117150901">拨号PPP NDIS RNDIS CDC ECM NCM QMI_WWAN GOBINET RMNET MBIM概念介绍</a><br>1、其实总结起来，我觉得就两种，一种是PPP类，一种是NDIS族类。NDIS族类的方式是标准化加高效化，对上，尽量标准化为网络设备；对下，则尽可能适应物理通道，高效利用。<br>2、RMNET拨号、QMI拨号、NDIS拨号都是NDIS拨号，叫法不同而已。<br>3、USB网卡拨号分为RMNET/QMI/NDIS、ECM、MBIM、RNDIS四种类型。<br>5、速度、对比、选用<br>  PPP使用复杂，对CPU负载大，网速上不去，不推荐使用。<br>  NDIS拨号支持QMAP功能，可以实现IP聚合和IP复用功能。支持IP聚合就可以一次URB传输多个IP包，减少CPU负载率。支持IP复用，可以实现多网卡的功能。因此推荐使用（尤其是高通模组）。<br>  ECM不支持IP聚合和复用功能，决定了不适用于高速场景。<br>  RNDIS协议上是支持IP聚合的，但是Linux自带驱动没有使用，所以也不适用于高速场景。<br>  MBIM默认就支持IP聚合，也支持IP复用。推荐使用。</p>
+                <h1 id="OpenWRT系统移植移远EC200A模块"><a href="#OpenWRT系统移植移远EC200A模块" class="headerlink" title="OpenWRT系统移植移远EC200A模块"></a><strong>OpenWRT系统移植移远EC200A模块</strong></h1><h2 id="网卡的驱动方式"><a href="#网卡的驱动方式" class="headerlink" title="网卡的驱动方式"></a><strong>网卡的驱动方式</strong></h2><p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qlexcel/article/details/117150901">拨号PPP NDIS RNDIS CDC ECM NCM QMI_WWAN GOBINET RMNET MBIM概念介绍</a><br>1、其实总结起来，我觉得就两种，一种是PPP类，一种是NDIS族类。NDIS族类的方式是标准化加高效化，对上，尽量标准化为网络设备；对下，则尽可能适应物理通道，高效利用。<br>2、RMNET拨号、QMI拨号、NDIS拨号都是NDIS拨号，叫法不同而已。<br>3、USB网卡拨号分为RMNET/QMI/NDIS、ECM、MBIM、RNDIS四种类型。<br>5、速度、对比、选用<br>  PPP使用复杂，对CPU负载大，网速上不去，不推荐使用。<br>  NDIS拨号支持QMAP功能，可以实现IP聚合和IP复用功能。支持IP聚合就可以一次URB传输多个IP包，减少CPU负载率。支持IP复用，可以实现多网卡的功能。因此推荐使用（尤其是高通模组）。<br>  ECM不支持IP聚合和复用功能，决定了不适用于高速场景。<br>  RNDIS协议上是支持IP聚合的，但是Linux自带驱动没有使用，所以也不适用于高速场景。<br>  MBIM默认就支持IP聚合，也支持IP复用。推荐使用。</p>
 <p>EC200A 支持的网卡驱动： <strong>PPP</strong>、 <strong>ECM</strong>、<strong>RNDIS</strong><br>EC20 支持：<strong>PPP</strong>、<strong>QMI</strong>、 <strong>GobiNet</strong></p>
 <h2 id="用到的文件："><a href="#用到的文件：" class="headerlink" title="用到的文件："></a><strong>用到的文件：</strong></h2><ol>
 <li>Quectel_Linux_USB_Serial_Option_Driver_20230524.tgz</li>
@@ -982,9 +982,9 @@ Base system ---&gt;
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="深入浅出Wi-Fi7技术储备">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">深入浅出Wi-Fi7技术储备</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
