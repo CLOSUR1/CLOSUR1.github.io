@@ -1,0 +1,1306 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="OpenWRT系统移植移远EC200A模块, C、C++、Linux">
+    <meta name="description" content="日常随笔分享">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>OpenWRT系统移植移远EC200A模块 | CLOSUR1&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 7.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">CLOSUR1&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">CLOSUR1&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            日常随笔分享
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">OpenWRT系统移植移远EC200A模块</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-06-11
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2024-06-12
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    10 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+            <!-- 是否加载使用自带的 prismjs. -->
+            <link rel="stylesheet" href="/libs/prism/prism.css">
+            <script src="/libs/prism/prism.js"></script>
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="OpenWRT系统移植移远EC200A模块"><a href="#OpenWRT系统移植移远EC200A模块" class="headerlink" title="OpenWRT系统移植移远EC200A模块"></a><strong>OpenWRT系统移植移远EC200A模块</strong></h1><h2 id="网卡的驱动方式"><a href="#网卡的驱动方式" class="headerlink" title="网卡的驱动方式"></a><strong>网卡的驱动方式</strong></h2><p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qlexcel/article/details/117150901">拨号PPP NDIS RNDIS CDC ECM NCM QMI_WWAN GOBINET RMNET MBIM概念介绍</a><br>1、其实总结起来，我觉得就两种，一种是PPP类，一种是NDIS族类。NDIS族类的方式是标准化加高效化，对上，尽量标准化为网络设备；对下，则尽可能适应物理通道，高效利用。<br>2、RMNET拨号、QMI拨号、NDIS拨号都是NDIS拨号，叫法不同而已。<br>3、USB网卡拨号分为RMNET/QMI/NDIS、ECM、MBIM、RNDIS四种类型。<br>5、速度、对比、选用<br>  PPP使用复杂，对CPU负载大，网速上不去，不推荐使用。<br>  NDIS拨号支持QMAP功能，可以实现IP聚合和IP复用功能。支持IP聚合就可以一次URB传输多个IP包，减少CPU负载率。支持IP复用，可以实现多网卡的功能。因此推荐使用（尤其是高通模组）。<br>  ECM不支持IP聚合和复用功能，决定了不适用于高速场景。<br>  RNDIS协议上是支持IP聚合的，但是Linux自带驱动没有使用，所以也不适用于高速场景。<br>  MBIM默认就支持IP聚合，也支持IP复用。推荐使用。</p>
+<p>EC200A 支持的网卡驱动： <strong>PPP</strong>、 <strong>ECM</strong>、<strong>RNDIS</strong><br>EC20 支持：<strong>PPP</strong>、<strong>QMI</strong>、 <strong>GobiNet</strong></p>
+<h2 id="用到的文件："><a href="#用到的文件：" class="headerlink" title="用到的文件："></a><strong>用到的文件：</strong></h2><ol>
+<li>Quectel_Linux_USB_Serial_Option_Driver_20230524.tgz</li>
+<li>KBA_EC200&amp;UC200_Linux&amp;Android_USB_driver_移植说明.pdf</li>
+<li>Quectel_UMTS_LTE_5G_Linux_USB_Driver用户指导V1.0.pdf</li>
+</ol>
+<h2 id="确定linux版本和模组pid、vid"><a href="#确定linux版本和模组pid、vid" class="headerlink" title="确定linux版本和模组pid、vid"></a><strong>确定linux版本和模组pid、vid</strong></h2><p>确定系统的linux内核版本，可用以下命令查看确定，如下可确定linux内核版本为5.4.238</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@OpenWrt:/# dmesg | head
+[ &nbsp; &nbsp;0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd034]
+[ &nbsp; &nbsp;0.000000] Linux version 5.4.238 (chenlishe@datalink-System-Product-Name) (gcc version 8.4.0 (OpenWrt GCC 8.4.0 r16856-dcaa45c67d)) #0 SMP Thu Jul 6 07:27:51 2023
+[ &nbsp; &nbsp;0.000000] Machine model: MediaTek MT7981 RFB
+[ &nbsp; &nbsp;0.000000] earlycon: uart8250 at MMIO32 0x0000000011002000 (options '')
+[ &nbsp; &nbsp;0.000000] printk: bootconsole [uart8250] enabled
+[ &nbsp; &nbsp;0.000000] On node 0 totalpages: 64592
+[ &nbsp; &nbsp;0.000000] &nbsp; DMA32 zone: 1024 pages used for memmap
+[ &nbsp; &nbsp;0.000000] &nbsp; DMA32 zone: 0 pages reserved
+[ &nbsp; &nbsp;0.000000] &nbsp; DMA32 zone: 64592 pages, LIFO batch:15
+[ &nbsp; &nbsp;0.000000] psci: probing for conduit method from DT.
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>EC200A series (RTOS): VID: 0x02c7c  PID: 0x6005</p>
+<p>openwrt版本可以通过以下命令：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@OpenWrt:/# cat /etc/openwrt_release
+DISTRIB_ID='OpenWrt'
+DISTRIB_RELEASE='21.02-SNAPSHOT'
+DISTRIB_REVISION='r16856-dcaa45c67d'
+DISTRIB_TARGET='mediatek/mt7981'
+DISTRIB_ARCH='aarch64_cortex-a53'
+DISTRIB_DESCRIPTION='OpenWrt 21.02-SNAPSHOT r16856-dcaa45c67d'
+DISTRIB_TAINTS='no-all'
+root@OpenWrt:/# cat /etc/os-release
+NAME="OpenWrt"
+VERSION="21.02-SNAPSHOT"
+ID="openwrt"
+ID_LIKE="lede openwrt"
+PRETTY_NAME="OpenWrt 21.02-SNAPSHOT"
+VERSION_ID="21.02-snapshot"
+HOME_URL="https://openwrt.org/"
+BUG_URL="https://bugs.openwrt.org/"
+SUPPORT_URL="https://forum.openwrt.org/"
+BUILD_ID="r16856-dcaa45c67d"
+OPENWRT_BOARD="mediatek/mt7981"
+OPENWRT_ARCH="aarch64_cortex-a53"
+OPENWRT_TAINTS="no-all"
+OPENWRT_DEVICE_MANUFACTURER="OpenWrt"
+OPENWRT_DEVICE_MANUFACTURER_URL="https://openwrt.org/"
+OPENWRT_DEVICE_PRODUCT="Generic"
+OPENWRT_DEVICE_REVISION="v0"
+OPENWRT_RELEASE="OpenWrt 21.02-SNAPSHOT r16856-dcaa45c67d"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="编译openwrt"><a href="#编译openwrt" class="headerlink" title="编译openwrt"></a><strong>编译openwrt</strong></h2><p>一般openwrt系统的源码目录下都有README，根据README来进行编译即可，例如：</p>
+<h3 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a><strong>Requirements</strong></h3><p>You need the following tools to compile OpenWrt, the package names vary between distributions. A complete list with distribution specific packages is found in the <a target="_blank" rel="noopener" href="https://openwrt.org/docs/guide-developer/build-system/install-buildsystem">Build System Setup</a> documentation.</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">gcc binutils bzip2 flex python3 perl make find grep diff unzip gawk getopt
+subversion libz-dev libc-dev rsync which<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="Quickstart"><a href="#Quickstart" class="headerlink" title="Quickstart"></a><strong>Quickstart</strong></h3><ol>
+<li>Run <code>./scripts/feeds update -a</code> to obtain all the latest package definitions defined in feeds.conf / feeds.conf.default</li>
+<li>Run <code>./scripts/feeds install -a</code> to install symlinks for all obtained packages into package/feeds/</li>
+<li>Run <code>make menuconfig</code> to select your preferred configuration for the toolchain, target system &amp; firmware packages.</li>
+<li>Run <code>make</code> to build your firmware. This will download all sources, build the cross-compile toolchain and then cross-compile the GNU/Linux kernel &amp; all chosen applications for your target system.</li>
+</ol>
+<p>准备好各种编译工具，运行1.和2.后make menuconfig进行编译前设置，选择对应板子的芯片类型和板子类型，如图为MT7981和MediaTek mt7981-spim-nand-rfb。</p>
+<img src="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/Untitled.png" class="" title="make menuconfig">
+
+<p>保存后退出，在源码目录运行<code>make V=99</code>进行编译，V=99是输出打印，方便查看编译过程错误的原因（如有），第一次make成功后后续的编译可以根据电脑的cpu核心数加<code>-j12</code>，12是电脑cpu的核心数量，越大越快，不建议完全等于cpu核心数量。<br>第一次make完后源码目录会出现build_dir目录，其中会包含编译工具链我们需要替换的文件，可以用<code>find build_dir/ -name option.c</code>找到，我的是：build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7981/linux-5.4.238/drivers/usb/serial/option.c</p>
+<h2 id="简单：替换驱动文件法"><a href="#简单：替换驱动文件法" class="headerlink" title="简单：替换驱动文件法"></a><strong>简单：替换驱动文件法</strong></h2><p>在Quectel_Linux_USB_Serial_Option_Driver_20230524.tgz中找到与自己系统内核版本最近的文件夹，我的系统内核是5.4.238，最接近的是5.4.41的这个。</p>
+<p>进入文件夹最里层drivers/usb/serial/，会看到有四个文件：option.c、qcserial.c、usb_wwan.c、usb-wwan.h</p>
+<p>打开option.c，添加EC200A的pid和vid，如果是其他模组可以看是否已经包含有。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">static const struct usb_device_id option_ids[] = {
+#if 1 //Added by Quectel
+    { USB_DEVICE(0x05C6, 0x9090) }, /* Quectel UC15 */
+    { USB_DEVICE(0x05C6, 0x9003) }, /* Quectel UC20 */
+    { USB_DEVICE(0x05C6, 0x9215) }, /* Quectel EC20(MDM9215) */
+    { USB_DEVICE(0x2C7C, 0x0125) }, /* Quectel EC20(MDM9x07)/EC25/EG25 */
+    { USB_DEVICE(0x2C7C, 0x0121) }, /* Quectel EC21 */
+    { USB_DEVICE(0x2C7C, 0x0191) }, /* Quectel EG91 */
+    { USB_DEVICE(0x2C7C, 0x0195) }, /* Quectel EG95 */
+    { USB_DEVICE(0x2C7C, 0x0306) }, /* Quectel EG06/EP06/EM06 */
+    { USB_DEVICE(0x2C7C, 0x030B) }, /* Quectel EG065K/EG060K */
+    { USB_DEVICE(0x2C7C, 0x0514) }, /* Quectel BL EG060K RNDIS Only */
+    { USB_DEVICE(0x2C7C, 0x0512) }, /* Quectel EG12/EP12/EM12/EG16/EG18 */
+    { USB_DEVICE(0x2C7C, 0x0296) }, /* Quectel BG96 */
+    { USB_DEVICE(0x2C7C, 0x0700) }, /* Quectel BG95/BG77/BG600L-M3/BC69 */
+    { USB_DEVICE(0x2C7C, 0x0435) }, /* Quectel AG35 */
+    { USB_DEVICE(0x2C7C, 0x0415) }, /* Quectel AG15 */
+    { USB_DEVICE(0x2C7C, 0x0452) }, /* Quectel AG520 */
+    { USB_DEVICE(0x2C7C, 0x0455) }, /* Quectel AG550 */
+    { USB_DEVICE(0x2C7C, 0x0620) }, /* Quectel EG20 */
+    { USB_DEVICE(0x2C7C, 0x0800) }, /* Quectel RG500/RM500/RG510/RM510 */
+    { USB_DEVICE(0x2C7C, 0x0801) }, /* Quectel RG520/RM520/SG520 */
+    { USB_DEVICE(0x2C7C, 0x6026) }, /* Quectel EC200 */
+    { USB_DEVICE(0x2C7C, 0x6120) }, /* Quectel UC200 */
+    { USB_DEVICE(0x2C7C, 0x6000) }, /* Quectel EC200/UC200 */
+    { USB_DEVICE(0x2C7C, 0x6005) }, /* Quectel EC200a */
+    { .match_flags = USB_DEVICE_ID_MATCH_VENDOR, .idVendor = 0x2C7C }, /* Match All Quectel Modules */
+#endif
+    { USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_COLT) },
+    { USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA) },
+    { USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA_LIGHT) },
+    { USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA_QUAD) },<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>根据手册Quectel_UMTS_LTE_5G_Linux_USB_Driver用户指导V1.0.pdf，还需要:</p>
+<ol>
+<li><p>添加USB零包机制</p>
+<img src="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/Untitled1.png" class="" title="添加USB零包机制">
+
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">#if 1 //Added by Quectel for zero packet
+if (dir == USB_DIR_OUT) {
+struct usb_device_descriptor *desc = &amp;serial-&gt;dev-&gt;descriptor;
+if (desc-&gt;idVendor == cpu_to_le16(0x2C7C))
+urb-&gt;transfer_flags |= URB_ZERO_PACKET;
+}
+#endif<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>添加复位恢复机制</p>
+<img src="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/Untitled2.png" class="" title="添加复位恢复机制">
+
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">#if 1 //Added by Quectel
+.reset_resume = usb_wwan_resume,
+#endif<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>使用ECM or RANDIS</p>
+<img src="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/Untitled3.png" class="" title="使用ECM or RANDIS"></li>
+</ol>
+<p>但是对于我使用的linux内核版本，在Quectel_Linux_USB_Serial_Option_Driver_20230524.tgz的文件中移远已经进行添加修改，所以我们只需要全部替换build_dir/——-/drivers/usb/serial中对应的文件即可。</p>
+<p>修改完后需要对内核进行配置，在源码目录<code>make kernel_menuconfig</code>和<code>make menuconfig</code>，记得保存后再退出。</p>
+<pre class="line-numbers language-none"><code class="language-none">添加ECM与RNDIS驱动
+make kernel_menuconfig
+Device Drivers &nbsp;---&gt;
+    [*] USB support &nbsp;---&gt;
+        &lt;*&gt; &nbsp; Support for Host-side USB
+        &lt;*&gt; &nbsp; USB Serial Converter support &nbsp;---&gt;
+            &lt;*&gt; &nbsp; USB driver for GSM and CDMA modems
+    [*] Network device support &nbsp;---&gt;
+        USB Network Adapters &nbsp;---&gt;
+            &lt;*&gt; Multi-purpose USB Networking Framework
+                &lt;*&gt; &nbsp; CDC Ethernet support (smart devices such as cable modems)
+                &lt;*&gt; &nbsp; CDC NCM support
+                &lt;*&gt; &nbsp; Host for RNDIS and ActiveSync devices (EXPERIMENTAL)
+
+添加 USB网络驱动
+make menuconfig
+Kernel modules &nbsp;---&gt;
+ &nbsp;  USB Support &nbsp;---&gt;
+ &nbsp; &nbsp; &nbsp; &nbsp;-*- kmod-usb-core
+ &nbsp; &nbsp; &nbsp; &nbsp;-*- kmod-usb-net
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-*- &nbsp; kmod-usb-net-cdc-ether
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; &nbsp; kmod-usb-net-rndis
+ &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; kmod-usb-ohci
+ &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; kmod-usb-serial
+ &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; kmod-usb-serial-option
+ &nbsp; &nbsp; &nbsp; &nbsp; -*- kmod-usb-serial-wwan
+ &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; kmod-usb-uhci
+ &nbsp; &nbsp; &nbsp; &nbsp; &lt;*&gt; kmod-usb2
+
+PPP拨号相关( 如果不使用PPP可以减少这块的编译安装)
+Network &nbsp;---&gt;
+ &nbsp; &nbsp;-*- chat
+ &nbsp;  &lt;*&gt; ppp
+ &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; ppp-mod-pppoa
+ &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; ppp-mod-pppoe
+ &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; ppp-mod-pppol2tp
+ &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; ppp-mod-pptp
+ &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; ppp-mod-radius
+ &nbsp;  &lt;*&gt; ppp-multilink
+ &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; pppdump
+ &nbsp; &nbsp; &nbsp;  &lt;*&gt; &nbsp; pppstats
+ &nbsp;  &lt;*&gt; ser2net
+
+添加网络工具
+Utilities &nbsp;---&gt;
+ &nbsp;  &lt;*&gt; usb-modeswitch
+
+添加命令工具
+Base system ---&gt;
+ &nbsp;  &lt;*&gt; busybox (编译后出现 回车键进入)
+ &nbsp; &nbsp; &nbsp;  Miscellaneous Utilities ---&gt; [*] microcom
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>随后进行编译make V=99 -j12</p>
+<p>成功后在源码目录的/bin/targets/mediatek/mt7981/下有生成的固件，烧录型如：openwrt-mediatek-mt7981-mt7981-spim-nand-rfb-squashfs-sysupgrade.bin的文件即可</p>
+<p>烧录后USB接入板子，ls /dev/ttyUSB*查看是否有3个ttyUSB，如果有即网卡USB驱动移植成功</p>
+<p>利用echo或者microcom发送AT指令：</p>
+<ol>
+<li>ATI</li>
+<li>AT+CMEE=2</li>
+<li>AT+CPIN?</li>
+<li>AT+QCCID</li>
+<li>AT+QCFG=”usbnet”,1</li>
+<li>AT+QNETDEVCTL=3,1</li>
+</ol>
+<p>AT开启自动拨号上网，<code>vi  /etc/config/network</code>配置网络上网：</p>
+<pre class="line-numbers language-none"><code class="language-none">config interface 'wwan1'
+    option ifname 'usb0'
+    option proto 'dhcp'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>使用ifconfig查看网卡是否生成wwan1，ping baidu.com看是否上网。</p>
+<h2 id="技巧：打补丁法"><a href="#技巧：打补丁法" class="headerlink" title="技巧：打补丁法"></a><strong>技巧：打补丁法</strong></h2><p>由于build_dir 在make clean 后就会清空修改后文件，可以通过patch方式来实现编译自动生成代码，</p>
+<p>吧/drivers/usb/serial目录下option.c qcserial.c usb_wwan.c usb-wwan.h 拷贝到桌面(<strong>如果修改这部分代码，需要还原一下文件，最好方式make clean 然后再make V=s -j12</strong>)，找到移远的linux的USB驱动相近内部版本，通过命令生成patch ( diff -Nur file.old file.new &gt; xxx.patch)<br><code>diff -Nur xx/ v4.14.111/drivers/usb/serial/ &gt; ./ec200a.patch</code></p>
+<p>生成完之后不能直接用，</p>
+<ul>
+<li>所有diff -Nur 的行全部删除</li>
+<li>将所有的xx 替换 a/drivers/usb/serial</li>
+<li>将所有的v4.14.111/drivers/usb/serial 替换 b/drivers/usb/serial</li>
+</ul>
+<p>重命名（0999-add-mt7981-ec200a-drivers.patch）将生成的文件拷贝到<code>target/linux/ramips/patches-5.4/</code>，<code>make clean</code> 后才会在下一次的 <code>make V=99 -j12</code> 打入补丁。</p>
+<p>编译好后可以在<code>build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7981/linux-5.4.238/drivers/usb/serial/option.c</code>查看是否打人补丁，是否有EC200A的pid、vid，是否有移远USB网卡需要添加的部分等等。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Ask loong</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://closur1.github.io/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/">https://closur1.github.io/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Ask loong</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/">
+                    <div class="card-image">
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="LTE信号学习分析">
+                        
+                        <span class="card-title">LTE信号学习分析</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Ask loong
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="深入浅出Wi-Fi7技术储备">
+                        
+                        <span class="card-title">深入浅出Wi-Fi7技术储备</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Ask loong
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2024</span>
+            
+            <span id="year">2024</span>
+            <a href="/about" target="_blank">Ask loong</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/CLOSUR1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:756623868@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=756623868" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 756623868" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

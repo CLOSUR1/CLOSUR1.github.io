@@ -1,0 +1,1196 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="深入浅出Wi-Fi7技术储备, C、C++、Linux">
+    <meta name="description" content="日常随笔分享">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>深入浅出Wi-Fi7技术储备 | CLOSUR1&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 7.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">CLOSUR1&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">CLOSUR1&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            日常随笔分享
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">深入浅出Wi-Fi7技术储备</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-06-11
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2024-06-11
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.1k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    11 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+            <!-- 是否加载使用自带的 prismjs. -->
+            <link rel="stylesheet" href="/libs/prism/prism.css">
+            <script src="/libs/prism/prism.js"></script>
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="深入浅出Wi-Fi7技术储备"><a href="#深入浅出Wi-Fi7技术储备" class="headerlink" title="深入浅出Wi-Fi7技术储备"></a>深入浅出Wi-Fi7技术储备</h1><h1 id="Wi-Fi7新特性"><a href="#Wi-Fi7新特性" class="headerlink" title="Wi-Fi7新特性"></a>Wi-Fi7新特性</h1><h2 id="MLO链路聚合技术"><a href="#MLO链路聚合技术" class="headerlink" title="MLO链路聚合技术"></a>MLO<strong>链路聚合技术</strong></h2><h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><p>MLD（即支持MLO的设备）PHY：</p>
+<p>在MLD以前的IC虽然支持多个频段的连接，但是每一次只能够选择一个频段进行连接。所以对于一个终端而言，一次只能够和AP建立单独一个Wi-Fi连接，这个连接要不是在2.4GHz上某个信道，要不是在5GHz上的某个信道。而AP可以多个频段同时工作，但是其实现方法是通过多IC的方式处理的，也就是不同频段使用不同的IC进行隔离，从而能够允许多频段的并行工作。之所以一块IC只能够提供一个频段的连接，很大程度上与IC内部只提供单个基带的设置有关。</p>
+<img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/MLD.png" class="" title="MLD">
+
+<p>粗略而言，我们可以理解图的上半部分是一个AP，这个AP包含一个IC，这个IC里面包含三个device，这里画三个主要是设想中分别对应2.4GHz，5GHz以及6GHz，也就是2.4+5+6的场景。该图的下半部分对应的是终端，该终端和AP一样，同样是一个IC，里面三个device。AP和终端间可以建立多个连接，按照图例上包含2个连接，即Link 1和Link 2。这里描述没有特别凸显一个IC内，而是仍然采用AP，STA这样的概念描述，是为了兼容协议当前框架的描述，换言之，最简单理解就是把原来两个独立的东西，塞到一个地方，然后讨论其协同工作的模式，但是其本身独立工作的机理并没有做改变，只是添加了新的协作功能而已。</p>
+<p>多链路设备的一个射频单元有至少两个以上的射频链路链接到空口，但对于逻辑链路控制（LLC）层仅只有一个MAC地址。相比于单链路设备，在射频链路上增加了冗余。设备根据使用场景与状态，进行不同链路的切换与协同，来保障数据能够更高效、更快速、低延迟地进行传输。</p>
+<p>MLO中还有一个一个概念就是Link的概念，代表实际的连接。注意：Link也有各自独立的mac地址。协议规定MLD的mac可以跟两个Link中的一个相同，也可以是另外不同的唯一地址。</p>
+<h3 id="MLO的细分模式"><a href="#MLO的细分模式" class="headerlink" title="MLO的细分模式"></a>MLO的细分模式</h3><ol>
+<li><p><strong>STR和NSTR模式</strong></p>
+<p> <strong>异步模式（STR模式）</strong></p>
+<p> Simultaneous Tx and Rx，同时的收发工作模式。是一种不同Link间允许同时工作，所产生全双工的工作机制。两个Link是完全独立工作的，两者互不干扰。所以在传输过程中，就有可能会出现，link 1发送，link 2接收这样的情况，所以称为STR模式。（注意：和以太网上的全双工不是一个概念）</p>
+ <img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled.png" class="" title="STR">
+<p> <strong>同步模式（NSTR模式）</strong></p>
+<p> non-STR：不支持在两个link上同时TX/RX，两个link要么同时发送要么同时接收，比如2G+5G/6G</p>
+ <img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled1.png" class="" title="NSTR">
+<p> 2.4G + 5G干扰比较小，所以可以用STR 同时进行TX/RX没有问题。而5G + 5G/6G由于信道相邻，一个link的发射很容易功率泄露出去影响到另外一个link的接收。</p>
+</li>
+<li><p><strong>MLO MLMR和MLSR模式</strong></p>
+<p> 这两种模式主要是站在当前工作的Link数量的角度来定义的。</p>
+<p> 虽然MLO支持多个Link，但并不是时时刻刻都有多个link在工作。比如一开始连上的时候，默认是只有一个link在工作的，主要是为了省电，等到系统检测到流量开始多起来，才会使能另外一条link来获得更好的性能。实际使用过程中的各种场景较复杂，也有很多其他场景被迫只能使用一根（比如干扰，SAP/P2P共流）。</p>
+ <img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled2.png" class="" title="MLMR和MLSR">
+<p> MLMR: Multi Link Multi Radio: 两条link都在工作，在国内就类似是2.4G+5G</p>
+<p> MLSR: Multi Link Single Radio: 只有一条link在工作，只有2.4G或者只有5G，通过形如“qos null pm=1”告诉路由器这条link休眠了。</p>
+</li>
+</ol>
+<h3 id="复制传输和联合传输"><a href="#复制传输和联合传输" class="headerlink" title="复制传输和联合传输"></a><strong>复制传输和联合传输</strong></h3><p>在多链路设备上进行数据传输的典型模式有复制传输和联合传输。复制传输，其中一个信道环境存在干扰时，接收端根据先到先得原则，可以有效地降低传输时延。联合传输，顾名思义就是将数据报文进行合理地拆分，同时在两个射频链路上进行数据传输，可以有效地提升传输效率。此外，多链路设备可以通过其中一个链路交换其它链路的工作状态和电源管理信息，使其仅在需要的时候进入工作状态，剩余时间休眠，更有效地节能。</p>
+
+
+<blockquote>
+<p>对于上述提到的MLO细分模式和传输模式，对于我们目前来讲更多是黑盒状态，我们并不能知道实际上使用的是哪种模式，协议和底层配置已经实现了，实际使用上应该根据环境是自动切换。</p>
+</blockquote>
+<h3 id="MLO与传统双WIFI技术的对比"><a href="#MLO与传统双WIFI技术的对比" class="headerlink" title="MLO与传统双WIFI技术的对比"></a><strong>MLO与传统双WIFI技术的对比</strong></h3><p>MLO确实很像双Wi-Fi加速，都是连两个Wi-Fi热点，都能实现加速特点。但WiFi 7的MLO跟这个其实不是一回事。现有的双WiFi加速实现的原理是双网卡（wlan0/wlan1），连两个WiFi会有两个IP地址，上层再把数据在TCP层次聚合在一起。而WiFi 7的MLO多链接操作，在逻辑上仍然是单网卡(wlan0)，两个通路的数据在MAC层就聚合了，对上层来说，完全感知不到连了两个Wi-Fi热点。</p>
+<p><strong>双Wi-Fi加速：</strong></p>
+<ul>
+<li>双网卡双wlan节点双IP地址；</li>
+<li>需要TCP层次的客制化修改以分配和聚合不同网卡的TCP连接；</li>
+<li>可以支持任意2.4G+5G的热点混搭；</li>
+<li>只对使用多TCP connections的app有好处；</li>
+<li>需要主动去连接两个Wi-Fi热点。</li>
+</ul>
+<img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled3.png" class="" title="双Wi-Fi加速">
+
+<p><strong>Wi-Fi 7 MLO：</strong></p>
+<ul>
+<li>无需TCP层次的修改，用户空间感知不到有任何变化；</li>
+<li>单网卡单wlan节点单IP地址；</li>
+<li>数据聚合发生在MAC层</li>
+<li>对上层app的TCP connections没有任何要求；</li>
+<li>需要路由器也支持WiFi MLO才能支持多链路操作；</li>
+<li>只要主动连一个热点，另外一个自动连接。</li>
+</ul>
+<img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled4.png" class="" title="Wi-Fi 7 MLO">
+
+<h2 id="MRU多资源单元技术"><a href="#MRU多资源单元技术" class="headerlink" title="MRU多资源单元技术"></a>MRU多资源单元技术</h2><p>Wi-Fi6引入了OFDMA（正交频分多址，最广应用在4G技术LTE上），提出了RU(Resource uint)的概念，定义了一共7种RU：26-tone RU、52-tone RU、106-tone RU、242-tone RU、484-tone RU、9966-tone RU和2X996-tone RU，但这些情况下，用户只能分配到固定的RU工作。</p>
+<p>一个20MHz的OFDMA信道包含了256个子载波（Subcarriers，或者称为Tones）组成。这些子载波组成了一些子信道，我们称一个子信道为一个资源单元（RU）。如上图所示，当20 MHz信道时被细分时，802.11ax终端可以使用4种不同大小的RU单元，分别包含26个子载波，52个子载波，106个子载波和242子载波，大约相当于2MHz，4MHz，8MHz和20MHz信道带宽的分别。 802.11ax的AP决定了在一个20MHz信道内可以使用多少个RU，以及RU形成的不同组合。</p>
+<img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled5.png" class="" title="RU">
+
+<p>简答来讲就是：将信道分成若干正交子信道，将高速数据信号转换成并行的低速子数据流，调制到在每个子信道上进行传输。</p>
+<img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled6.png" class="" title="发送示意图">
+
+<p>如上图所示，802.11ax AP首先向终端#1和终端#2发送下行数据，在第一时刻，20MHz的信道通过OFDMA技术被划分成了两个子信道。在OFDMA技术中，20MHz信道包含了256个子载波，终端#1和终端#2分别占据106个子载波，这些子载波互相没有交叠。在第二时刻，802.11ax AP向终端#3，终端#4，终端#5和终端#6发送下行信息。在此时，信道被划分成4个子信道，分别占据52个子载波。在第三时刻，802.11ax AP使用整个信道发送下行数据帧给终端#5，此时一共使用了242个数据子载波，其可以有效的利用整个20MHz的信道。在第四时刻，AP使用两个子信道，分别是106个子载波向终端#4和终端#6发送数据。在第五时刻，AP在此向单个终端（即终端#1）发送下行数据，其占据整个20MHz信道，包含242个数据子载波。在第六时刻，AP同时向终端#3，终端#4和终端#6发送下行数据。此时，信道被划分成3个不等大小的子信道，其中终端#3和终端#4分别占据52个子载波，终端#6占据106个子载波。</p>
+<p>Wi-Fi7中提出了MRU的概念，它允许讲多个RU分给单用户使用。例如，20M带宽，分配给两个用户，在Wi-Fi6时代，两个用户可以分别分配106，到了Wi-Fi7，可以分别分配106+26和106。</p>
+<p>对于前面提到的RU，随意组合会较大增加复杂度，因此协议对组合进行了限制，首先协议将RU分成了两类：</p>
+<ul>
+<li>小部RU：26、52、106-tone RU</li>
+<li>大部RU：242、484、996、2×996、 3×996-toneRU</li>
+</ul>
+<p>不同大类RU之间不能组合，具体组合规范不进行探讨。</p>
+<img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled7.png" class="" title="RU组合表">
+
+<p>大部+小部这样去拼凑，理论上是有增益的，但实际上需要依赖：</p>
+<ul>
+<li>厂家对于MRU的构造算法；</li>
+<li>实际使用场景和环境对于sub carriers（tones）的分配的影响。</li>
+</ul>
+<blockquote>
+<p>私货：感觉Wi-Fi的协议还是比较理想化，像搭乐高积木一样，在相同应用OFDMA技术的LTE上，基站已经可以根据子载波灵活分配给最合适的用户终端了，不受子载波是否连续的限制，而且分配机制的主要准则是看信噪比进行分配，而非厂商定义。</p>
+</blockquote>
+<h3 id="对于多用户"><a href="#对于多用户" class="headerlink" title="对于多用户"></a>对于多用户</h3><p>配合OFDMA，可以降低延迟25%（源自MediaTek文档，对比11ax）。<br>例如，如果4个用户同时传输，传输数据比例为2:2:3:1，与WiFi5和WiFi6 AP相比，实现了最短端到端延迟，延迟分别降低了33%和25%，如图所示</p>
+<img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled8.png" class="" title="多用户延时对比">
+
+<h3 id="对于单用户"><a href="#对于单用户" class="headerlink" title="对于单用户"></a>对于单用户</h3><p>单个用户要结合前导码打孔技术技术来一起看，才能体现出Wi-Fi7的优势，具体如下</p>
+<h2 id="Preamble-Puncture-前导码打孔技术"><a href="#Preamble-Puncture-前导码打孔技术" class="headerlink" title="Preamble Puncture 前导码打孔技术"></a>Preamble Puncture 前导码打孔技术</h2><p> Wi-Fi6其实就已经有了preamble puncture了，本质上是频谱打孔。但是技术有一个要求，就是给两个或者以上节点配合工作。比如一段频谱，中间被占一小段，那么就可以调度两个资源单元（RU），左右隔开来，给分配给两个用户使用。</p>
+<img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled9.png" class="" title="preamble puncture">
+
+<p><strong>为什么给选两个或者以上用户？</strong></p>
+<p>这就是Wi-Fi6的要求，一个用户只能选一个RU。但是一个紧接着问题是，如果只有一个用户，或者此时虽然多个用户，但是只有一个用户有数据要传输。那么之前的频谱打孔就失效了。因此，反思问题主要是一个用户只能选一个RU，那么改成MRU就可以了。排除协议细节，仅从思路上我们可以这样理解。</p>
+<img src="/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/Untitled10.png" class="" title="打孔后对比">
+
+<p>带来好处最直接的就是用户带宽的设置和使用，默认设置最大即可，中间靠协议和实现，底层做自适应的调节。能给单个用户在信道受干扰的条件下分配到更大的带宽资源，也就是提升了抗干扰能力了。</p>
+<h2 id="参考文件"><a href="#参考文件" class="headerlink" title="参考文件"></a>参考文件</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.intel.com/content/dam/www/public/us/en/documents/pdf/wi-fi-7-and-beyond.pdf">https://www.intel.com/content/dam/www/public/us/en/documents/pdf/wi-fi-7-and-beyond.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.qualcomm.com/news/onq/2022/02/pushing-limits-wi-fi-performance-wi-fi-7">https://www.qualcomm.com/news/onq/2022/02/pushing-limits-wi-fi-performance-wi-fi-7</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ohexy5VE170">https://www.youtube.com/watch?v=ohexy5VE170</a></li>
+<li><a target="_blank" rel="noopener" href="https://d86o2zu8ugzlg.cloudfront.net/mediatek-craft/documents/Wi-Fi-7-MLO-White-Paper-WF7MLOWP0622.pdf">https://d86o2zu8ugzlg.cloudfront.net/mediatek-craft/documents/Wi-Fi-7-MLO-White-Paper-WF7MLOWP0622.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://mediatek-marketing.files.svdcdn.com/production/documents/Wi-Fi-7-MLO-White-Paper-WF7MLOWP0622.pdf?dm=1684470687">https://mediatek-marketing.files.svdcdn.com/production/documents/Wi-Fi-7-MLO-White-Paper-WF7MLOWP0622.pdf?dm=1684470687</a></li>
+<li><a target="_blank" rel="noopener" href="https://mediatek-marketing.files.svdcdn.com/production/documents/Key-Advantages-of-Wi-Fi-7_MediaTek-White-Paper-WF70222.pdf?dm=1684470666">https://mediatek-marketing.files.svdcdn.com/production/documents/Key-Advantages-of-Wi-Fi-7_MediaTek-White-Paper-WF70222.pdf?dm=1684470666</a></li>
+</ol>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Ask loong</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://closur1.github.io/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/">https://closur1.github.io/2024/06/11/shen-ru-qian-chu-wi-fi7-ji-zhu-chu-bei/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Ask loong</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/">
+                    <div class="card-image">
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="OpenWRT系统移植移远EC200A模块">
+                        
+                        <span class="card-title">OpenWRT系统移植移远EC200A模块</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-06-11
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Ask loong
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/03/08/dang/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="荡">
+                        
+                        <span class="card-title">荡</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            荡荡上帝，下民之辟。疾威上帝，其命多辟。天生烝民，其命匪谌。靡不有初，鲜克有终。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Ask loong
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2024</span>
+            
+            <span id="year">2024</span>
+            <a href="/about" target="_blank">Ask loong</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/CLOSUR1" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:756623868@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=756623868" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 756623868" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
