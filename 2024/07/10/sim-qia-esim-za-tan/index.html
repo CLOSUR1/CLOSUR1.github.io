@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="LTE信号学习分析, C、C++、Linux">
+    <meta name="keywords" content="SIM卡、ESIM杂谈, C、C++、Linux">
     <meta name="description" content="日常随笔分享">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>LTE信号学习分析 | CLOSUR1&#39;s Blog</title>
+    <title>SIM卡、ESIM杂谈 | CLOSUR1&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -250,12 +250,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">LTE信号学习分析</h1>
+                    <h1 class="description center-align post-title">SIM卡、ESIM杂谈</h1>
                 </div>
             </div>
         </div>
@@ -383,28 +383,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-07-01
+                    2024-07-10
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-12-10
+                    2024-12-11
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.9k
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    4 分
                 </div>
                 
 
@@ -433,134 +433,55 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="LTE信号学习分析"><a href="#LTE信号学习分析" class="headerlink" title="LTE信号学习分析"></a>LTE信号学习分析</h1><h2 id="国内运营商频谱资源分布情况"><a href="#国内运营商频谱资源分布情况" class="headerlink" title="国内运营商频谱资源分布情况"></a>国内运营商频谱资源分布情况</h2><img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/17291286028642.png" class="" width="17291286028642">国内运营商在频谱资源上主要分为3个板块
+                <h1 id="SIM卡、ESIM杂谈"><a href="#SIM卡、ESIM杂谈" class="headerlink" title="SIM卡、ESIM杂谈"></a>SIM卡、ESIM杂谈</h1><h2 id="我的手机和卡为什么有那么多什么id之类的？"><a href="#我的手机和卡为什么有那么多什么id之类的？" class="headerlink" title="我的手机和卡为什么有那么多什么id之类的？"></a>我的手机和卡为什么有那么多什么id之类的？</h2><style>.hplksgrwmjrt{zoom:50%;}</style><img src="/2024/07/10/sim-qia-esim-za-tan/image-20241111160432116.png" class="hplksgrwmjrt" alt="image-20241111160432116">
 
-<h3 id="低频"><a href="#低频" class="headerlink" title="低频"></a>低频</h3><p>第一块是低于1GHz的低频，因为衍射能力强、衰减低，俗称打底网，用于保证信号覆盖，增加通话的可靠度，补充上行速度，值得注意的是，在900M频段附近移动清退后分给了联通一些，自己保留了15M，不过因为清退GSM发生在5G建设之后，加上和广电共享N28，导致其作为4G频段建设较慢。</p>
-<h3 id="中频"><a href="#中频" class="headerlink" title="中频"></a>中频</h3><p>这部分主要是4G的频率，这个频段相对兼顾了速度和覆盖，老三家都有一些B3频段，作为4G网络长期维持的基础频段，对于电信和联通来讲，B1本身就是他们的主力，目前两家采取共建共享的方式，合并成45M，有的地方是4G、5G各开20M，还有的地方（国内厂家其实很多都没有支持）会通过开启DSS（动态频谱分配技术），按终端对RB载波资源块的需求来调整4/5G的比例，但是缺点是容量会有损失，实际上在国内的基建情况是直接开的40M的N1。而在移动方面广泛部署B3之前，B38（N41的子集）和B39则是其最初的主力，也就是4G的TDD频段，B39现在仍然在当4G使用，B34则是沿用3G TD-SCDMA部分（历史遗留问题）设备改造的频段，用的不多。而三家都有的B40因为会和军用雷达干扰，原则上只能在室内使用，三家部署的积极性都不大。而B41一开始也只是用于室内，这个频段曾经三家都有，但是因为TDD本身的上行能力问题，而且本身作为中高频覆盖比中频要差，当初电信和联通就没怎么部署，最后都退给了移动发展5G，移动把中间完整的100M部署给了5G，剩下60M按情况部署给4/5G，算得上是移动的主力容量层。</p>
-<style>.kgsghcjgskhr{zoom:50%;}</style><img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241112102846806.png" class="kgsghcjgskhr" alt="image-20241112102846806">
+<p><strong>我们的手机+SIM卡，实际上有三个号码，MSISDN、IMSI和IMEI</strong></p>
+<h3 id="MSISDN"><a href="#MSISDN" class="headerlink" title="MSISDN"></a>MSISDN</h3><p>我们常见的手机号码（国家码+86其实就是0086）</p>
+<style>.auovmhvhyrbl{zoom:50%;}</style><img src="/2024/07/10/sim-qia-esim-za-tan/image-20241111161112697.png" class="auovmhvhyrbl" alt="image-20241111161112697">
 
-<h3 id="高频"><a href="#高频" class="headerlink" title="高频"></a>高频</h3><p>这部分是5G的主力频段，n78频段在5G时代得到了广泛的应用，n77和n79目前还不太普及，主要是用于室内密集场景。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>如果要追求信号覆盖，低频显然是必不可少的，像电梯、野外、高层或者室内深处的环境，只要没有室内覆盖，而且外面没有中频信号塔，手机就会优先连接B5、B5或者n28。</p>
-<img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241112105038895.png" class="" title="image-20241112105038895">
+<h3 id="ICCID"><a href="#ICCID" class="headerlink" title="ICCID"></a>ICCID</h3><p>Integrate circuit card identity 集成电路卡识别码即<strong>SIM卡卡号</strong>，相当于手机卡的身份证。 ICCID为IC卡的识别号码，共由20位字符组成。分别介绍如下： 前六位运营商代码：中国移动的为：898600；898602；898604；898607 ，中国联通的为：898601、898606、898609，中国电信898603、898611。</p>
+<h3 id="IMSI"><a href="#IMSI" class="headerlink" title="IMSI"></a>IMSI</h3><p>International Mobile Subscriber Identity 国际移动用户识别码，是用于区分蜂窝网络中<strong>不同用户的</strong>、<strong>在所有蜂窝网络中不重复的识别码</strong>（相当于与SIM卡卡体绑定）。手机将IMSI存储于一个64比特的字段发送给网络。IMSI可以用来在归属位置寄存器（HLR，Home Location Register）或拜访位置寄存器（VLR，Visitor Location Register）中查询用户的信息。为了避免被监听者识别并追踪特定的用户，大部分情形下手机和网络之间的通信会使用<strong>随机产生的临时移动用户识别码</strong>（<strong>TMSI</strong>，Temporary Mobile Subscriber Identity）代替IMSI。</p>
+<style>.vugedkajbsjn{zoom:50%;}</style><img src="/2024/07/10/sim-qia-esim-za-tan/image-20241021104021925.png" class="vugedkajbsjn" alt="image-20241021104021925">
 
-<p>在类似的极限环境下，并不是手机收不到基站的信号，而是手机的上行信号基站接收不到。</p>
-<img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241112105556910.png" class="" title="image-20241112105556910">
+<h3 id="IMEI"><a href="#IMEI" class="headerlink" title="IMEI"></a>IMEI</h3><p>International Mobile Equipment Identity 国际移动设备识别码，即通常所说的手机序列号、手机“串号”，用于在移动电话网络中识别每一部独立的手机等移动通信设备，相当于移动电话的身份证。序列号共有15~17位数字，前8位（TAC）是型号核准号码（早期为6位），是区分手机品牌和型号的编码。接着2位（FAC）是最后装配号（仅在早期机型中存在），代表最终装配的代码。后6位（SNR）是串号，代表生产顺序号。</p>
+<h2 id="先来看看物理形态"><a href="#先来看看物理形态" class="headerlink" title="先来看看物理形态"></a>先来看看物理形态</h2><p>普通SIM卡实体：</p>
+<img src="/2024/07/10/sim-qia-esim-za-tan/image-20240801100029392.png" class="" title="image-20240801100029392">
 
-<p>而低频因为比高频的路径损耗低，所以手机的上行信号相对于高频更容易被基站接收到，因此才有稳定的连接。</p>
-<img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241112105722030.png" class="" title="image-20241112105722030">
+<p>ESIM的实体：</p>
+<style>.slwrbwyhpjvq{zoom:50%;}</style><img src="/2024/07/10/sim-qia-esim-za-tan/image-20240801100355253.png" class="slwrbwyhpjvq" alt="image-20240801100355253">
 
-<p>在实际生活中，低频虽然会被用到，但是用到的生活基本信号只有一两格，速度也不快。这是因为低频的资源很宝贵，所以频宽很难做得宽，速度就上不去，而且低频覆盖范围很大，基站如果太密就会容易发生互相干扰，所以低频都是低密度覆盖，连上的生活通常距离远一些，信号就会差，而一个站覆盖的广用户就会多，还要保证通话业务，分到的资源就很少，因此低频的连接优先级就比较低。这个时候主力频段的意义就来了，虽然覆盖没有那么广，但是中等的信号配上20-240M左右的频宽，基本上能满足大多数情况的上网需求。</p>
-<p>对于移动通信来讲，上网体验很体现木桶效应。</p>
-<img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241112114645608.png" class="" title="image-20241112114645608">
+<p>小趣事，实际上这种芯片不仅存在于PCB，还存在于的插拔SIM卡( ^_^)/~~~</p>
+<style>.mtmjnsqpwhfl{zoom:50%;}</style><img src="/2024/07/10/sim-qia-esim-za-tan/image-20240801100739770.png" class="mtmjnsqpwhfl" alt="image-20240801100739770">
 
-<h2 id="基站会限制设备信号吗？"><a href="#基站会限制设备信号吗？" class="headerlink" title="基站会限制设备信号吗？"></a>基站会限制设备信号吗？</h2><p>会！基站侧为了减少设备之间的互相干扰，会根据接入设备的信号水平，下放一个Pmax限制最大输出功率<img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241112115625365.png" class="" title="image-20241112115625365"></p>
-<p>在4G刚普及的时候，绝大多数的4G LTE频段（除公共安全领域的 Band 14 外），在规范3GPP中只规范了一种功率等级，Power class 3。但随着5G 步伐的不断加速，为了改善 TD-LTE网络的上行覆盖范围，从而提升弱信号环境下手机的上网体验问题，以Sprint、中国移动为代表的运营商引入了仅面向于高频段 Band41（2.5~2.7GHz）的 Power class 2，简称“PC2”技术。</p>
-<p>PC3把上行链路的最大发射功率限制在 23 dBm±2 ，导致LTE网络下行与上行链路的功率差异大约为 5 dB。在某些只有下行覆盖的区域，设备可以下载数据而上传非常非常慢。但PC2 技术可以将最大发射功率提高 3dB 至 26dBm±2，理论上增强 30% 的上行覆盖范围，大幅节约网络建设成本（没错，运营商也要降本增效）。</p>
-<p>但是实际情况却不尽如人意，运营商调整基站策略，同时要设备ipcc配置实现，大多数情况下连PC2都没用上。</p>
-<img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241112140507279.png" class="" title="image-20241112140507279">
+<p>甚至国内厂商从其他设备拆下ESIM然后装到定制的卡套上（降本增效之围城：里面的人想出去，外面的人想进来）</p>
+<style>.cvvkwlhhgnxu{zoom:50%;}</style><img src="/2024/07/10/sim-qia-esim-za-tan/image-20240801101420462.png" class="cvvkwlhhgnxu" alt="image-20240801101420462">
 
-<p>题外话：高通X75基带的NV配置就可以配置层无视Pmax，“有些设备”甚至可以调成单PA发32dbm，代价是增加了耗电和烧射频的风险。（当然也会干扰其他手机和增大辐射）</p>
-<img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241112140845919.png" class="" title="image-20241112140845919">
+<h2 id="国内的ESIM形势"><a href="#国内的ESIM形势" class="headerlink" title="国内的ESIM形势"></a>国内的ESIM形势</h2><p>联通一直在 eSIM 这块走的比较前面, 包括一开始做一号双终端和iPad eSIM, 后续如果推出纯esim的手机，可能联通会有很长一段时间的先发优势。</p>
+<style>.mgiekyjnuhwa{zoom:50%;}</style><img src="/2024/07/10/sim-qia-esim-za-tan/1cbfe3aadc0469c0a41f0e00a07462af546418.jpg@1052w_!web-dynamic.avif" class="mgiekyjnuhwa" alt="img">
 
-<h2 id="常见模组频段支持情况"><a href="#常见模组频段支持情况" class="headerlink" title="常见模组频段支持情况"></a>常见模组频段支持情况</h2><table>
-<thead>
-<tr>
-<th>LTE module</th>
-<th>EC200A-CN</th>
-<th>EC200A-EU</th>
-<th>EC200A-AU</th>
-<th>EG25-G</th>
-<th>EC800K-CN</th>
-<th>EC20-CN</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>区域/运营商</td>
-<td>中国/印度</td>
-<td>欧洲</td>
-<td>拉丁美洲/澳大利亚/新西兰</td>
-<td>全球</td>
-<td>中国/印度</td>
-<td>中国</td>
-</tr>
-<tr>
-<td>LTE-FDD</td>
-<td>B1/B3/B5/B8</td>
-<td>B1/B3/B5/B7/B8/B20/B28</td>
-<td>B1/B2/B3/B4/B5/B7/B8/B28/B66</td>
-<td>B1/B2/B3/B4/B5/B7/B8/B12/B13/B18/B19/B20/B25/B26/B28</td>
-<td>B1/B3/B5/B8</td>
-<td>B1/B3/B5/B8</td>
-</tr>
-<tr>
-<td>LTE-TDD</td>
-<td>B34/B38/B39/B40/B41</td>
-<td>B38/B40/B41</td>
-<td>/B40</td>
-<td>B38/B39/B40/B41</td>
-<td>B34/B38/B39/B40/B41</td>
-<td>B34/B38/B39/B40/B41</td>
-</tr>
-<tr>
-<td>强制认证</td>
-<td>SRRC/NAL/CCC</td>
-<td>GCF/CE</td>
-<td>FCC/Anatal</td>
-<td>覆盖范围较多，具体参考产品规格书</td>
-<td>SRRC/NAL/CCC</td>
-<td>SRRC/NAL/CCC</td>
-</tr>
-<tr>
-<td>其他认证</td>
-<td>WHQL</td>
-<td>WHQL</td>
-<td>WHQL</td>
-<td>WHQL</td>
-<td>WHQL</td>
-<td>WHQL</td>
-</tr>
-<tr>
-<td>LTE-FDD（Mbps）</td>
-<td>150（下行）/50（上行）</td>
-<td>150（下行）/50（上行）</td>
-<td>150（下行）/50（上行）</td>
-<td>150（下行）/50（上行）</td>
-<td>10（下行）/5（上行）</td>
-<td>150（下行）/50（上行）</td>
-</tr>
-<tr>
-<td>LTE-TDD</td>
-<td>120（下行）/30（上行）</td>
-<td>120（下行）/30（上行）</td>
-<td>120（下行）/30（上行）</td>
-<td>130（下行）/30（上行）</td>
-<td>8.96（下行）/3.1（上行）</td>
-<td>130（下行）/30（上行）</td>
-</tr>
-</tbody></table>
-<h2 id="户外物联网场景分析"><a href="#户外物联网场景分析" class="headerlink" title="户外物联网场景分析"></a>户外物联网场景分析</h2><p>看完“国内运营商频谱资源分布情况”和“常见模组频段支持情况”，我们不难发现其实常见4G模组在国内的频段覆盖其实都是到位的，户外场景的4G频段主要如下：</p>
-<ul>
-<li>低频<ul>
-<li>移动：B8（889-904、934-949共30M）</li>
-<li>联通&amp;电信共建共享：B8（904-915、949-960共22M）B5（825-835、870-880共30M）</li>
-</ul>
-</li>
-<li>中频<ul>
-<li>移动：B3（1710-1735共50M）B39（1885-1915共30M）B41（2615-2675共60M）</li>
-<li>联通&amp;电信共建共享：B1（1940-1965、2130-2155共45M）（1920-1940、2110-2130共40M）</li>
-<li>联通：B3（1735-1765、1830-1860共60M）</li>
-<li>电信：B3（1765-1785、1860-1889共40M）</li>
-</ul>
-</li>
-</ul>
-<p>从频段不难看出，FDD下的B1/B3是兼顾速率和覆盖的重中之重，针对户外信号较弱的地方，B8和B5则能提供基础的网络覆盖。在4G天线的设计上应该更注重对应这些band下的性能。</p>
-<h2 id="相关参考资料"><a href="#相关参考资料" class="headerlink" title="相关参考资料"></a>相关参考资料</h2><img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241111174727872.png" class="" title="image-20241111174727872">
+<style>.vkgpxixftiei{zoom:50%;}</style><img src="/2024/07/10/sim-qia-esim-za-tan/bf6aa7a918363d0270d4f0b23dccb639546418.jpg@1052w_!web-dynamic.avif" class="vkgpxixftiei" alt="img">
 
-<img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241111174816681.png" class="" title="image-20241111174816681">
+<p>联通在 MWC24 Shanghai 的表态</p>
+<blockquote>
+<p>[!IMPORTANT]</p>
+<p>在中国是有特定的环境的很多国外的厂商非常纳闷中国到底对 eSIM 是什么态度到底遇到了什么困难,其实在 eSIM 技术本身和全球一样没有什么特殊之处。但在中国有一些特定的环境，比如说入网实名制，比如说电信诈骗问题的解决只有吧这个全链条的问题都全部解决好，才能给 eSIM 创造非常好的发展环境。<br>当然到今天为止我们认为中国技术以外的问题都逐步得到解决非常成熟！</p>
+</blockquote>
+<p>然而：</p>
+<p>eSIM 芯片能拆, 利用开 eSIM 可以批量的漏洞, 拆出来之后放到能模拟 IMEI 的设备上(猫池)就能打电话or发短信，并且轻松用境外号码（这下缅北本地化了）</p>
+<h2 id="携号转网是怎么个事？"><a href="#携号转网是怎么个事？" class="headerlink" title="携号转网是怎么个事？"></a>携号转网是怎么个事？</h2><p>早在19年12月，携号转网业务就在全国范围内推出，然而实际上能转和转成功的依旧寥寥无几～</p>
+<p>在手机通话中，存在主叫和被叫，需要同时使用IMSI和MSISDN的，但是IMSI和MSISDN并不是一一对应关系。有丢过卡的话，去营业厅换SIM卡的时候，IMSI（和卡体绑定）就变了，而MSISDN不变。与手机通话不同，上网是单个用户的行为，只需要IMSI号码合法，业务正常，无欠费，即可正常上网。那携号转网是怎么改变运营商的，就很容易得知了。</p>
+<p>携号转网，不变的是MSISDN，变化的是IMSI。在携号转网的同时，用户需其实是要更换SIM卡的。</p>
+<p>那为什么我们曾测试的联通ESIM方案能一直切换运营商一直做携号转网呢？这就涉及到空中写号了。</p>
+<h2 id="空中写号是怎么个事？"><a href="#空中写号是怎么个事？" class="headerlink" title="空中写号是怎么个事？"></a>空中写号是怎么个事？</h2><p>空中写卡，是指SIM卡功能全部通过软件实现的eSIM和vSIM，可通过远程配置（OTA）更新运营商配置文件，实现运营商网络切换。</p>
+<p>实际上SIM卡有多个号码，空中写卡更改的到底是卡的什么号码呢？</p>
+<p>一般来说，更改的是eSIM卡和vSIM卡的IMSI号码。</p>
+<img src="/2024/07/10/sim-qia-esim-za-tan/1592212925857078347.png" class="" title="img">
 
-<img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241111175351378.png" class="" title="image-20241111175351378">
+<p>一张ESIM的物联网应用，需要从获取其EID开始，拿到EID后则需根据EID获取本卡预存的“种子号”，激活种子号并使用种子号进行注网上网后，下载其他业务码号进行使用，切换使用下载的码号，即可完成不同运营商的切换使用。</p>
+<img src="/2024/07/10/sim-qia-esim-za-tan/image-20241111155558786.png" class="" title="image-20241111155558786">
 
-<img src="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/image-20241112142537394.png" class="" title="image-20241112142537394">
+<p>物联网设备集成eSIM卡，通常需要多方配合，包括厂商、卡商、运营商、中间平台、证书机构等；在实际使用的时候由于业务鉴权等等，还会有对应的授权和激活key等等需要操作……</p>
+
                 
             </div>
             <hr/>
@@ -586,7 +507,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://closur1.github.io/2024/07/01/lte-xin-hao-xue-xi-fen-xi/">https://closur1.github.io/2024/07/01/lte-xin-hao-xue-xi-fen-xi/</a>
+                    <a href="https://closur1.github.io/2024/07/10/sim-qia-esim-za-tan/">https://closur1.github.io/2024/07/10/sim-qia-esim-za-tan/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -791,9 +712,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/07/10/sim-qia-esim-za-tan/">
                     <div class="card-image">
@@ -810,9 +732,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-07-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -821,6 +743,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -831,12 +754,12 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/06/11/openwrt-xi-tong-yi-zhi-yi-yuan-ec200a-mo-kuai/">
+                <a href="/2024/07/01/lte-xin-hao-xue-xi-fen-xi/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="OpenWRT系统移植移远EC200A模块">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="LTE信号学习分析">
                         
-                        <span class="card-title">OpenWRT系统移植移远EC200A模块</span>
+                        <span class="card-title">LTE信号学习分析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -847,7 +770,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-01
                             </span>
                         <span class="publish-author">
                             
